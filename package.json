@@ -1,0 +1,20 @@
+{
+  "name": "pool-villa-project",
+  "version": "1.0.0",
+  "description": "Pool Villa Booking Website - Full Stack Application",
+  "main": "run-dev.js",
+  "scripts": {
+    "dev": "node run-dev.js",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "seed": "cd backend && npm run seed",
+    "build": "cd frontend && npm run build",
+    "start-backend": "cd backend && npm run dev",
+    "start-frontend": "cd frontend && npm start"
+  },
+  "keywords": ["pool", "villa", "booking", "thailand", "fullstack"],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
