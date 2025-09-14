@@ -1,20 +1,37 @@
 {
   "name": "pool-villa-project",
-  "version": "1.0.0",
-  "description": "Pool Villa Booking Website - Full Stack Application",
-  "main": "run-dev.js",
-  "scripts": {
-    "dev": "node run-dev.js",
-    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
-    "seed": "cd backend && npm run seed",
-    "build": "cd frontend && npm run build",
-    "start-backend": "cd backend && npm run dev",
-    "start-frontend": "cd frontend && npm start"
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "framer-motion": "^8.5.0",
+    "lucide-react": "^0.263.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.1",
+    "react-scripts": "5.0.1",
+    "serve": "^14.2.5"
   },
-  "keywords": ["pool", "villa", "booking", "thailand", "fullstack"],
-  "author": "Your Name",
-  "license": "MIT",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "devDependencies": {
-    "concurrently": "^7.6.0"
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.0"
   }
 }
