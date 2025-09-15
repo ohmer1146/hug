@@ -15,10 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/poolvilla';
 
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(MONGODB_URI)
 .then(() => console.log('MongoDB connected successfully'))
 .catch(err => {
   console.log('MongoDB connection error:', err.message);
@@ -37,24 +34,35 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
-  
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-  });
+// Serve static files - ALWAYS try to serve frontend (ไม่ใช่แค่ production)
+const frontendBuildPath = path.join(__dirname, '../frontend/build');
+console.log('Frontend build path:', frontendBuildPath);
+
+// ตรวจสอบว่า frontend build directory มีอยู่จริง
+const fs = require('fs');
+if (fs.existsSync(frontendBuildPath)) {
+  console.log('Frontend build directory exists');
+  app.use(express.static(frontendBuildPath));
+} else {
+  console.log('Frontend build directory does not exist - serving API only');
 }
+
+// สำหรับทุก request ที่ไม่ใช่ API routes ให้ส่ง index.html
+app.get('*', (req, res) => {
+  if (fs.existsSync(frontendBuildPath)) {
+    res.sendFile(path.join(frontendBuildPath, 'index.html'));
+  } else {
+    res.status(404).json({ 
+      message: 'Frontend not built. Please check build process.',
+      api: 'API is working. Use /api endpoints.'
+    });
+  }
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong!' });
-});
-
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ message: 'Route not found' });
 });
 
 app.listen(PORT, () => {

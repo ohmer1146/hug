@@ -1,8 +1,40 @@
 #!/bin/bash
-echo "Installing dependencies..."
-npm install
 
-echo "Building application..."
-npm run build
+echo "=== Starting Build Process ==="
 
-echo "Build completed successfully!"
+# Build frontend
+echo "Building frontend..."
+cd frontend
+
+# Install dependencies
+if ! npm install; then
+    echo "❌ Frontend npm install failed!"
+    exit 1
+fi
+
+# Build frontend
+if ! npm run build; then
+    echo "❌ Frontend build failed!"
+    exit 1
+fi
+
+# Check if build directory exists
+if [ ! -d "build" ]; then
+    echo "❌ Frontend build directory was not created!"
+    exit 1
+fi
+
+echo "✅ Frontend build completed successfully!"
+
+# Build backend
+echo "Building backend..."
+cd ../backend
+
+# Install dependencies
+if ! npm install; then
+    echo "❌ Backend npm install failed!"
+    exit 1
+fi
+
+echo "✅ Backend build completed successfully!"
+echo "=== Build process completed ==="
