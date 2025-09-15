@@ -6,13 +6,13 @@ echo "=== Starting Build Process ==="
 echo "Building frontend..."
 cd frontend
 
-# Install dependencies
+echo "Installing frontend dependencies..."
 if ! npm install; then
     echo "❌ Frontend npm install failed!"
     exit 1
 fi
 
-# Build frontend
+echo "Building frontend application..."
 if ! npm run build; then
     echo "❌ Frontend build failed!"
     exit 1
@@ -30,7 +30,7 @@ echo "✅ Frontend build completed successfully!"
 echo "Building backend..."
 cd ../backend
 
-# Install dependencies
+echo "Installing backend dependencies..."
 if ! npm install; then
     echo "❌ Backend npm install failed!"
     exit 1
