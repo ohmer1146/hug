@@ -21,7 +21,7 @@ const About = () => {
             <div>
               <h2 className="text-3xl font-bold text-gray-800 mb-6">เรื่องราวของเรา</h2>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                ก่อตั้งขึ้นในปี 2020, Home Hug Pool Villas เกิดขึ้นจากความหลงใหลในการมอบประสบการณ์การพักผ่อนที่พิเศษสุด
+                ก่อตั้งขึ้นในปี 2077, Home Hug Pool Villas เกิดขึ้นจากความหลงใหลในการมอบประสบการณ์การพักผ่อนที่พิเศษสุด
                 ในสถานที่ที่สวยงามที่สุดของประเทศไทย เราเข้าใจดีว่าการพักผ่อนที่สมบูรณ์แบบต้องการมากกว่าแค่ที่พัก
                 มันคือการสร้างความทรงจำที่คงอยู่ตลอดไป
               </p>
@@ -101,7 +101,7 @@ const About = () => {
                 alt="Team Member" 
                 className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
               />
-              <h3 className="text-xl font-semibold text-gray-800">สมชาย ใจดี</h3>
+              <h3 className="text-xl font-semibold text-gray-800">โอเบ็นเท็น</h3>
               <p className="text-blue-600 mb-2">ผู้ก่อตั้ง</p>
               <p className="text-gray-600">ผู้ที่มีความหลงใหลในการบริการและความพึงพอใจของลูกค้า</p>
             </div>
@@ -112,7 +112,7 @@ const About = () => {
                 alt="Team Member" 
                 className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
               />
-              <h3 className="text-xl font-semibold text-gray-800">สมหญิง เกื้อกูล</h3>
+              <h3 className="text-xl font-semibold text-gray-800">โอเบ็นเท็น</h3>
               <p className="text-blue-600 mb-2">ผู้จัดการทั่วไป</p>
               <p className="text-gray-600">ดูแลการดำเนินงานทั้งหมดและรับรองประสบการณ์ที่ดีที่สุด</p>
             </div>
@@ -123,7 +123,7 @@ const About = () => {
                 alt="Team Member" 
                 className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
               />
-              <h3 className="text-xl font-semibold text-gray-800">สมหมาย บริการ</h3>
+              <h3 className="text-xl font-semibold text-gray-800">โอเบ็นเท็น</h3>
               <p className="text-blue-600 mb-2">หัวหน้าฝ่ายบริการลูกค้า</p>
               <p className="text-gray-600">พร้อมช่วยเหลือคุณตลอด 24 ชั่วโมง</p>
             </div>
