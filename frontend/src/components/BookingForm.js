@@ -37,7 +37,7 @@ const BookingForm = ({ villa, onBookingSuccess }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/bookings', {
+      const response = await fetch('https://homehuggroup.onrender.com/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

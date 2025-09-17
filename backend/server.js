@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/poolvilla';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://homehugpoolvilla_0111:homehugpoolvilla_0111@cluster0.yewk82f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 mongoose.connect(MONGODB_URI)
 .then(() => console.log('MongoDB connected successfully'))

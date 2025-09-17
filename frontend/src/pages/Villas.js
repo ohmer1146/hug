@@ -8,7 +8,7 @@ const Villas = () => {
   useEffect(() => {
     const fetchVillas = async () => {
       try {
-        const response = await fetch('/api/villas');
+        const response = await fetch('https://homehuggroup.onrender.com/api/villas');
         const data = await response.json();
         setVillas(data);
         setLoading(false);

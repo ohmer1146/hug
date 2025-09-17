@@ -14,7 +14,7 @@ const VillaDetail = () => {
   useEffect(() => {
     const fetchVilla = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/villas/${id}`);
+        const response = await fetch(`https://homehuggroup.onrender.com/api/villas/${id}`);
         if (response.ok) {
           const data = await response.json();
           setVilla(data);

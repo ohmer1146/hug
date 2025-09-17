@@ -15,7 +15,7 @@ const Reviews = ({ villaId }) => {
 
   const fetchReviews = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/reviews/villa/${villaId}`);
+      const response = await fetch(`https://homehuggroup.onrender.com/api/reviews/villa/${villaId}`);
       const data = await response.json();
       setReviews(data);
     } catch (error) {
@@ -33,7 +33,7 @@ const Reviews = ({ villaId }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/reviews', {
+      const response = await fetch('https://homehuggroup.onrender.com/api/reviews', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
