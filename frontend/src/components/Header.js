@@ -1,5 +1,6 @@
 // src/components/Header.js
 import React from 'react';
+import { Link } from 'react-router-dom'; // เพิ่ม import นี้
 
 const Header = () => {
   return (
@@ -8,18 +9,18 @@ const Header = () => {
         <div className="header-content">
           <div className="logo">
             <div className="logo-icon">🏖️</div>
-            <div className="logo-text">Home Hug Pool Villas</div>
+            <Link to="/" className="logo-text">Home Hug Pool Villas</Link> {/* เปลี่ยนเป็น Link */}
           </div>
           <nav>
             <ul>
-              <li><a href="#">หน้าแรก</a></li>
-              <li><a href="#">วิลล่า</a></li>
-              <li><a href="#">บริการ</a></li>
-              <li><a href="#">เกี่ยวกับเรา</a></li>
-              <li><a href="#">ติดต่อ</a></li>
+              <li><Link to="/">หน้าแรก</Link></li> {/* เปลี่ยนเป็น Link */}
+              <li><Link to="/villas">วิลล่า</Link></li> {/* เปลี่ยนเป็น Link */}
+              <li><a href="#services">บริการ</a></li> {/* นี้เป็น anchor link จึงยังใช้ a อยู่ */}
+              <li><Link to="/about">เกี่ยวกับเรา</Link></li> {/* เปลี่ยนเป็น Link */}
+              <li><Link to="/contact">ติดต่อ</Link></li> {/* เปลี่ยนเป็น Link */}
             </ul>
           </nav>
-          <a href="#" className="book-now">จองตอนนี้</a>
+          <Link to="/booking" className="book-now">จองตอนนี้</Link> {/* เปลี่ยนเป็น Link */}
         </div>
       </div>
     </header>
