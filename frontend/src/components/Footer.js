@@ -31,10 +31,8 @@ const Footer = () => {
           <div className="footer-column">
             <h3>Destinations</h3>
             <ul className="footer-links">
-              <li><a href="#"><i className="fas fa-chevron-right"></i> Phuket</a></li>
-              <li><a href="#"><i className="fas fa-chevron-right"></i> Koh Samui</a></li>
-              <li><a href="#"><i className="fas fa-chevron-right"></i> Krabi</a></li>
-              <li><a href="#"><i className="fas fa-chevron-right"></i> Hua Hin</a></li>
+              <li><a href="#"><i className="fas fa-chevron-right"></i> พัทยา </a></li>
+            
             </ul>
           </div>
           
