@@ -1,5 +1,6 @@
 // src/components/FeaturedVillas.js
 import React from 'react';
+import { Link } from 'react-router-dom'; // เพิ่ม import นี้
 import VillaCard from './VillaCard';
 
 const FeaturedVillas = () => {
@@ -53,7 +54,7 @@ const FeaturedVillas = () => {
         </div>
         
         <div className="view-all">
-          <a href="#" className="btn btn-primary">View All Villas</a>
+          <Link to="/villas" className="btn btn-primary">View All Villas</Link> {/* เปลี่ยนเป็น Link */}
         </div>
       </div>
     </section>
