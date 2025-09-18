@@ -1,5 +1,6 @@
 // src/components/VillaCard.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const VillaCard = ({ villa }) => {
   return (
@@ -16,20 +17,22 @@ const VillaCard = ({ villa }) => {
         <div className="villa-features">
           <div className="villa-feature">
             <i className="fas fa-users"></i>
-            {villa.guests} Guests
+            {villa.guests} ผู้เข้าพัก
           </div>
           <div className="villa-feature">
             <i className="fas fa-bed"></i>
-            {villa.bedrooms} Bedrooms
+            {villa.bedrooms} ห้องนอน
           </div>
           <div className="villa-feature">
             <i className="fas fa-bath"></i>
-            {villa.bathrooms} Bathrooms
+            {villa.bathrooms} ห้องน้ำ
           </div>
         </div>
         <p className="villa-description">{villa.description}</p>
-        <div className="villa-price">฿{villa.price.toLocaleString()} / night</div>
-        <a href="#" className="villa-button">View Details</a>
+        <div className="villa-price">฿{villa.price.toLocaleString('th-TH')} / คืน</div>
+        <Link to={`/villa/${villa.id}`} className="villa-button">
+          ดูรายละเอียด
+        </Link>
       </div>
     </div>
   );

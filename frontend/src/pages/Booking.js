@@ -15,26 +15,35 @@ const Booking = () => {
     {
       id: 1,
       name: "Grand Palace Villa",
-      location: "Pattaya, Thailand",
+      location: "พัทยา, ประเทศไทย",
       price: 12500,
       image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      features: ["Private Pool", "Ocean View", "4 Guests", "3 Bedrooms"]
+      features: ["สระว่ายน้ำส่วนตัว", "วิวทะเล", "4 ผู้เข้าพัก", "3 ห้องนอน"],
+      guests: 4,
+      bedrooms: 3,
+      bathrooms: 2
     },
     {
       id: 2,
       name: "Ocean Breeze Villa",
-      location: "Pattaya, Thailand",
+      location: "พัทยา, ประเทศไทย",
       price: 18900,
       image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      features: ["Infinity Pool", "Beach Access", "6 Guests", "4 Bedrooms"]
+      features: ["อินฟินิตี้พูล", "ทางเข้าหาดส่วนตัว", "6 ผู้เข้าพัก", "4 ห้องนอน"],
+      guests: 6,
+      bedrooms: 4,
+      bathrooms: 3
     },
     {
       id: 3,
       name: "Royal Sunset Villa",
-      location: "Pattaya, Thailand",
+      location: "พัทยา, ประเทศไทย",
       price: 9800,
       image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      features: ["Sunset View", "Private Garden", "4 Guests", "2 Bedrooms"]
+      features: ["วิวพระอาทิตย์ตก", "สวนส่วนตัว", "4 ผู้เข้าพัก", "2 ห้องนอน"],
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2
     }
   ];
 
@@ -66,6 +75,16 @@ const Booking = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setBookingStep(3);
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('th-TH', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
   };
 
   return (
@@ -131,7 +150,7 @@ const Booking = () => {
                       ))}
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-2xl font-bold text-blue-600">฿{villa.price.toLocaleString()}</span>
+                      <span className="text-2xl font-bold text-blue-600">฿{villa.price.toLocaleString('th-TH')}</span>
                       <span className="text-gray-500">/คืน</span>
                     </div>
                   </div>
@@ -225,7 +244,7 @@ const Booking = () => {
                             <div className="ml-4">
                               <h4 className="font-semibold text-gray-800">{bookingData.villa.name}</h4>
                               <p className="text-gray-600 text-sm">{bookingData.villa.location}</p>
-                              <p className="text-blue-600 font-semibold">฿{bookingData.villa.price.toLocaleString()}/คืน</p>
+                              <p className="text-blue-600 font-semibold">฿{bookingData.villa.price.toLocaleString('th-TH')}/คืน</p>
                             </div>
                           </div>
                           
@@ -243,7 +262,7 @@ const Booking = () => {
                             <div className="flex justify-between">
                               <span className="text-gray-600">ค่าที่พัก</span>
                               <span className="font-medium">
-                                ฿{calculateTotal().toLocaleString()}
+                                ฿{calculateTotal().toLocaleString('th-TH')}
                               </span>
                             </div>
                             
@@ -256,7 +275,7 @@ const Booking = () => {
                               <div className="flex justify-between text-lg font-bold">
                                 <span>รวมทั้งหมด</span>
                                 <span className="text-blue-600">
-                                  ฿{(calculateTotal() + 500).toLocaleString()}
+                                  ฿{(calculateTotal() + 500).toLocaleString('th-TH')}
                                 </span>
                               </div>
                             </div>
@@ -295,7 +314,7 @@ const Booking = () => {
                   <div>
                     <p className="text-gray-600">วันที่</p>
                     <p className="font-semibold">
-                      {bookingData.checkIn} ถึง {bookingData.checkOut} ({calculateNights()} คืน)
+                      {formatDate(bookingData.checkIn)} ถึง {formatDate(bookingData.checkOut)} ({calculateNights()} คืน)
                     </p>
                   </div>
                   <div>
