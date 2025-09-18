@@ -39,8 +39,8 @@ const Footer = () => {
           <div className="footer-column">
             <h3>Contact Info</h3>
             <ul className="footer-links">
-              <li><a href="https://maps.google.com" target="_blank" rel="noopener noreferrer"><i className="fas fa-map-marker-alt"></i> VWH4+PPJ เมืองพัทยา อำเภอบางละมุง ชลบุรี 20150</a></li>
-              <li><a href="tel:+66123456789"><i className="fas fa-phone"></i> +66 61 105 8068</a></li>
+              <li><a href="https://maps.app.goo.gl/1ogGsNeD1SGMY9WRA" target="_blank" rel="noopener noreferrer"><i className="fas fa-map-marker-alt"></i> VWH4+PPJ เมืองพัทยา อำเภอบางละมุง ชลบุรี 20150</a></li>
+              <li><a href="tel:+6661105 8068"><i className="fas fa-phone"></i> +66 61 105 8068</a></li>
               <li><a href="mailto:info@luxurypoolvillas.com"><i className="fas fa-envelope"></i> info@luxurypoolvillas.com</a></li>
             </ul>
           </div>
