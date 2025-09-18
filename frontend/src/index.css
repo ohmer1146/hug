@@ -4,6 +4,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
 
 * {
   margin: 0;
@@ -481,6 +482,620 @@ footer {
   color: #D8BFD8;
 }
 
+/* Booking Page Styles */
+.booking-container {
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
+
+.booking-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.booking-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #4B0082;
+  margin-bottom: 20px;
+}
+
+.booking-subtitle {
+  font-size: 1.2rem;
+  color: #6A5ACD;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.booking-steps {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.booking-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 30px;
+  position: relative;
+}
+
+.booking-step:not(:last-child):after {
+  content: '';
+  position: absolute;
+  top: 40px;
+  right: -30px;
+  width: 60px;
+  height: 2px;
+  background: #9370DB;
+}
+
+.step-number {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #9370DB;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.step-active .step-number {
+  background: #4B0082;
+  transform: scale(1.1);
+}
+
+.step-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #4B0082;
+}
+
+.booking-content {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.villa-selection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.villa-option {
+  border: 2px solid #E6E6FA;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.villa-option:hover {
+  border-color: #9370DB;
+  transform: translateY(-5px);
+}
+
+.villa-option.selected {
+  border-color: #4B0082;
+  box-shadow: 0 5px 15px rgba(75, 0, 130, 0.2);
+}
+
+.villa-option-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.villa-option-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.villa-option-content {
+  padding: 20px;
+}
+
+.villa-option-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #4B0082;
+  margin-bottom: 10px;
+}
+
+.villa-option-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FF69B4;
+  margin-bottom: 15px;
+}
+
+.villa-option-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.villa-option-feature {
+  background: #F5F0FF;
+  color: #6A5ACD;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.booking-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #4B0082;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #E6E6FA;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #9370DB;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(147, 112, 219, 0.2);
+}
+
+.booking-summary {
+  background: #F5F0FF;
+  border-radius: 15px;
+  padding: 25px;
+}
+
+.summary-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #4B0082;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #E6E6FA;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #4B0082;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #9370DB;
+}
+
+.booking-confirmation {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.confirmation-icon {
+  width: 100px;
+  height: 100px;
+  background: #4B0082;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  color: white;
+  font-size: 2.5rem;
+}
+
+.confirmation-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #4B0082;
+  margin-bottom: 20px;
+}
+
+.confirmation-message {
+  font-size: 1.2rem;
+  color: #6A5ACD;
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.confirmation-details {
+  background: #F5F0FF;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* About Page Styles */
+.about-hero {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+  background: linear-gradient(135deg, rgba(147, 112, 219, 0.9) 0%, rgba(138, 43, 226, 0.9) 100%), url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+  color: white;
+  text-align: center;
+}
+
+.about-content {
+  padding: 80px 0;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.about-image {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.about-text h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #4B0082;
+  margin-bottom: 25px;
+}
+
+.about-text p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.team-section {
+  padding: 80px 0;
+  background: #F5F0FF;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.team-member {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-10px);
+}
+
+.team-member-image {
+  height: 250px;
+  overflow: hidden;
+}
+
+.team-member-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-member-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.team-member-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #4B0082;
+  margin-bottom: 5px;
+}
+
+.team-member-role {
+  color: #FF69B4;
+  margin-bottom: 15px;
+}
+
+/* Contact Page Styles */
+.contact-hero {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+  background: linear-gradient(135deg, rgba(106, 90, 205, 0.9) 0%, rgba(75, 0, 130, 0.9) 100%), url('https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+  color: white;
+  text-align: center;
+}
+
+.contact-content {
+  padding: 80px 0;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+}
+
+.contact-info {
+  background: #F5F0FF;
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.contact-info h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4B0082;
+  margin-bottom: 30px;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.contact-icon {
+  width: 60px;
+  height: 60px;
+  background: #9370DB;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  margin-right: 20px;
+}
+
+.contact-details h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4B0082;
+  margin-bottom: 5px;
+}
+
+.contact-details p {
+  color: #666;
+}
+
+.contact-form {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4B0082;
+  margin-bottom: 30px;
+}
+
+/* Admin Dashboard Styles */
+.admin-dashboard {
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
+
+.admin-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.admin-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #4B0082;
+  margin-bottom: 20px;
+}
+
+.admin-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 30px;
+}
+
+.admin-sidebar {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-sidebar h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #4B0082;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #E6E6FA;
+}
+
+.admin-menu {
+  list-style: none;
+}
+
+.admin-menu li {
+  margin-bottom: 10px;
+}
+
+.admin-menu a {
+  display: block;
+  padding: 12px 15px;
+  color: #666;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.admin-menu a:hover,
+.admin-menu a.active {
+  background: #9370DB;
+  color: white;
+}
+
+.admin-content {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Villa Detail Page Styles */
+.villa-detail {
+  padding: 100px 0 50px;
+}
+
+.villa-gallery {
+  margin-bottom: 40px;
+}
+
+.villa-main-image {
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.villa-main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.villa-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.villa-thumbnail {
+  height: 100px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.villa-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.villa-info {
+  margin-bottom: 40px;
+}
+
+.villa-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #4B0082;
+  margin-bottom: 15px;
+}
+
+.villa-location {
+  font-size: 1.2rem;
+  color: #6A5ACD;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.villa-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.villa-features {
+  margin-bottom: 40px;
+}
+
+.villa-features h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #4B0082;
+  margin-bottom: 20px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: #F5F0FF;
+  border-radius: 10px;
+}
+
+.feature-icon {
+  margin-right: 15px;
+  color: #9370DB;
+  font-size: 1.2rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-content {
@@ -508,5 +1123,29 @@ footer {
   
   .footer-content {
     grid-template-columns: 1fr;
+  }
+  
+  .booking-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .villa-thumbnails {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .confirmation-actions {
+    flex-direction: column;
   }
 }
