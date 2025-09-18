@@ -13,7 +13,7 @@ const Footer = () => {
             <div className="social-links">
               <a href="https://www.facebook.com/p/Home-Hug-Pool-Villa-Pattaya-100063712502026/?locale=th_TH"><i className="fab fa-facebook-f"></i></a>            
               <a href="https://www.tiktok.com/@homehugpoolvilla_pattaya?_t=8hDrVso70Aj&_r=1"><i className="fab fa-tiktok"></i></a>
-              <a href="#"><i className="fab fa-line"></i></a>
+              <a href="https://line.me/R/ti/p/@098fitty"><i className="fab fa-line"></i></a>
             </div>
           </div>
           
