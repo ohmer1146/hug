@@ -5,43 +5,32 @@
   padding-top: 100px;
 }
 
+/* แก้ไข header */
 .booking-header {
   background: linear-gradient(135deg, #5f19ec 0%, #38135b 100%);
   color: white;
-  padding: 20px 0;
+  padding: 15px 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
+  height: 80px; /* กำหนดความสูงคงที่ */
 }
 
-.booking-header .header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* เพิ่ม padding-top ให้กับเนื้อหาหลักเพื่อไม่ให้ถูก header ทับ */
+.booking-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F5F0FF 0%, #E6E6FA 50%, #D8BFD8 100%);
+  padding-top: 100px; /* ต้องมากกว่าหรือเท่ากับความสูงของ header */
+  font-family: 'Kanit', sans-serif;
 }
 
-.booking-header .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: white;
-  text-decoration: none;
-}
-
-.booking-header .logo-icon {
-  font-size: 2rem;
-}
-
-.booking-header .logo-text {
-  font-size: 1.8rem;
-  font-weight: 700;
-}
-
+/* ปรับการแสดงขั้นตอนการจองใน header */
 .booking-steps {
   display: flex;
-  gap: 40px;
+  gap: 30px;
+  align-items: center;
 }
 
 .booking-step {
@@ -54,25 +43,25 @@
 .booking-step:not(:last-child):after {
   content: '';
   position: absolute;
-  top: 40px;
-  right: -20px;
-  width: 20px;
+  top: 30px; /* ปรับตำแหน่งให้ตรงกับกลางของ step-number */
+  right: -15px;
+  width: 15px;
   height: 2px;
   background: rgba(255, 255, 255, 0.5);
 }
 
 .step-number {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   transition: all 0.3s ease;
 }
 
@@ -83,9 +72,44 @@
 }
 
 .step-title {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .booking-header {
+    height: auto;
+    padding: 10px 0;
+  }
+  
+  .booking-page {
+    padding-top: 120px; /* เพิ่ม padding-top สำหรับ mobile */
+  }
+  
+  .booking-header .header-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .booking-steps {
+    gap: 15px;
+  }
+  
+  .booking-step:not(:last-child):after {
+    display: none;
+  }
+  
+  .step-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+  
+  .step-title {
+    font-size: 0.7rem;
+  }
 }
 
 .booking-content {
