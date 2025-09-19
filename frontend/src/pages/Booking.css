@@ -13,12 +13,13 @@
 .booking-header {
   background: linear-gradient(135deg, #5f19ec 0%, #38135b 100%);
   color: white;
-  padding: 20px 0;
+  padding: 15px 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
+  height: auto;
 }
 
 .booking-header .container {
@@ -31,6 +32,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .booking-header .logo {
@@ -54,7 +56,10 @@
 .booking-steps {
   display: flex;
   list-style: none;
-  gap: 25px;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
 }
 
 .booking-step {
@@ -62,14 +67,15 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  min-width: 80px;
 }
 
 .booking-step:not(:last-child):after {
   content: '';
   position: absolute;
   top: 20px;
-  right: -20px;
-  width: 20px;
+  right: -12px;
+  width: 15px;
   height: 2px;
   background: rgba(255, 255, 255, 0.5);
 }
@@ -99,11 +105,12 @@
   font-size: 0.8rem;
   font-weight: 500;
   color: white;
+  text-align: center;
 }
 
 /* เนื้อหาหลัก - ต้องมี padding-top เพื่อไม่ให้ถูก header ทับ */
 .booking-content {
-  padding: 40px 0;
+  padding: 30px 0;
 }
 
 .booking-content .container {
@@ -115,50 +122,34 @@
 /* ส่วน hero */
 .booking-hero {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .booking-hero-title {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: #4B0082;
   margin-bottom: 15px;
+  line-height: 1.2;
 }
 
 .booking-hero-subtitle {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #6A5ACD;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
 }
 
-/* Responsive Design */
-@media (max-width: 968px) {
-  .booking-header .header-content {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .booking-steps {
-    gap: 15px;
-  }
-  
-  .booking-step:not(:last-child):after {
-    display: none;
-  }
-}
-
-/* Mobile Responsive Design */
+/* Mobile Responsive Design - แก้ไขปัญหา header ทับเนื้อหา */
 @media (max-width: 768px) {
   .booking-page {
     padding-top: 160px; /* เพิ่ม padding-top ให้มากขึ้นสำหรับ mobile */
   }
   
   .booking-header {
-    padding: 15px 0;
+    padding: 12px 0;
     height: auto;
-    min-height: 80px;
   }
   
   .booking-header .container {
@@ -168,41 +159,39 @@
   .booking-header .header-content {
     flex-direction: column;
     gap: 15px;
-    align-items: stretch;
+    align-items: center;
   }
   
   .booking-header .logo {
-    justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   
   .booking-steps {
-    flex-direction: column;
-    gap: 15px;
     width: 100%;
+    justify-content: center;
+    gap: 10px;
   }
   
   .booking-step {
     flex-direction: row;
     align-items: center;
-    gap: 12px;
-    justify-content: flex-start;
+    gap: 8px;
+    min-width: auto;
   }
   
   .booking-step:not(:last-child):after {
-    display: none; /* ซ่อนเส้นขั้นตอนใน mobile */
+    display: none;
   }
   
   .step-number {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     font-size: 0.9rem;
     margin-bottom: 0;
-    flex-shrink: 0;
   }
   
   .step-title {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     white-space: nowrap;
   }
   
@@ -221,25 +210,25 @@
   
   .booking-hero-subtitle {
     font-size: 1rem;
-    line-height: 1.5;
+    padding: 0 10px;
   }
 }
 
 @media (max-width: 480px) {
   .booking-page {
-    padding-top: 180px; /* เพิ่มมากขึ้นสำหรับหน้าจอขนาดเล็กมาก */
+    padding-top: 170px; /* เพิ่มมากขึ้นสำหรับหน้าจอขนาดเล็กมาก */
   }
   
   .booking-header {
-    padding: 12px 0;
+    padding: 10px 0;
   }
   
   .booking-header .logo-text {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
   
   .booking-header .logo-icon {
-    font-size: 1.7rem;
+    font-size: 1.8rem;
   }
   
   .step-number {
@@ -249,7 +238,7 @@
   }
   
   .step-title {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   
   .booking-hero-title {
@@ -264,35 +253,33 @@
 /* สำหรับแนวนอนใน mobile */
 @media (max-width: 768px) and (orientation: landscape) {
   .booking-page {
-    padding-top: 140px; /* ลดลงเล็กน้อยสำหรับแนวนอน */
+    padding-top: 130px; /* ลดลงเล็กน้อยสำหรับแนวนอน */
   }
   
   .booking-header .header-content {
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
   }
   
   .booking-header .logo {
     margin-bottom: 0;
-    justify-content: flex-start;
   }
   
   .booking-steps {
     flex-direction: row;
     justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
   }
   
   .booking-step {
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     align-items: center;
   }
   
   .step-title {
-    font-size: 0.7rem;
-    text-align: center;
+    font-size: 0.65rem;
   }
 }
 /* Villa Selection */
