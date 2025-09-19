@@ -151,7 +151,7 @@
 
 @media (max-width: 768px) {
   .booking-page {
-    padding-top: 140px; /* เพิ่ม padding-top สำหรับ mobile */
+    padding-top: 200px; /* เพิ่ม padding-top สำหรับ mobile */
   }
   
   .booking-hero-title {
