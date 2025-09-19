@@ -149,27 +149,48 @@
   }
 }
 
+/* Mobile Responsive Design */
 @media (max-width: 768px) {
   .booking-page {
-    padding-top: 200px; /* เพิ่ม padding-top สำหรับ mobile */
+    padding-top: 160px; /* เพิ่ม padding-top ให้มากขึ้นสำหรับ mobile */
   }
   
-  .booking-hero-title {
-    font-size: 2.2rem;
+  .booking-header {
+    padding: 15px 0;
+    height: auto;
+    min-height: 80px;
   }
   
-  .booking-hero-subtitle {
-    font-size: 1.1rem;
+  .booking-header .container {
+    padding: 0 15px;
+  }
+  
+  .booking-header .header-content {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  .booking-header .logo {
+    justify-content: center;
+    margin-bottom: 10px;
   }
   
   .booking-steps {
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
   }
   
   .booking-step {
     flex-direction: row;
-    gap: 10px;
+    align-items: center;
+    gap: 12px;
+    justify-content: flex-start;
+  }
+  
+  .booking-step:not(:last-child):after {
+    display: none; /* ซ่อนเส้นขั้นตอนใน mobile */
   }
   
   .step-number {
@@ -177,10 +198,101 @@
     height: 35px;
     font-size: 0.9rem;
     margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  
+  .step-title {
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  
+  .booking-content .container {
+    padding: 0 15px;
+  }
+  
+  .booking-hero {
+    margin-bottom: 30px;
+  }
+  
+  .booking-hero-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .booking-hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-page {
+    padding-top: 180px; /* เพิ่มมากขึ้นสำหรับหน้าจอขนาดเล็กมาก */
+  }
+  
+  .booking-header {
+    padding: 12px 0;
+  }
+  
+  .booking-header .logo-text {
+    font-size: 1.5rem;
+  }
+  
+  .booking-header .logo-icon {
+    font-size: 1.7rem;
+  }
+  
+  .step-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
   }
   
   .step-title {
     font-size: 0.8rem;
+  }
+  
+  .booking-hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .booking-hero-subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+/* สำหรับแนวนอนใน mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .booking-page {
+    padding-top: 140px; /* ลดลงเล็กน้อยสำหรับแนวนอน */
+  }
+  
+  .booking-header .header-content {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .booking-header .logo {
+    margin-bottom: 0;
+    justify-content: flex-start;
+  }
+  
+  .booking-steps {
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .booking-step {
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+  }
+  
+  .step-title {
+    font-size: 0.7rem;
+    text-align: center;
   }
 }
 /* Villa Selection */
