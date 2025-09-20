@@ -29,7 +29,7 @@ const Contact = () => {
               </div>
               <div className="contact-info-content">
                 <h3>ที่อยู่</h3>
-                <p>123 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพมหานคร 10110</p>
+                <p>Home Hug Pool Villa Pattaya, Pattaya, Thailand, Chon Buri</p>
               </div>
             </div>
             
@@ -41,8 +41,8 @@ const Contact = () => {
               </div>
               <div className="contact-info-content">
                 <h3>โทรศัพท์</h3>
-                <p>02-123-4567</p>
-                <p>089-123-4567</p>
+                <p>061-105-8068</p>
+                <p>061-105-8068</p>
               </div>
             </div>
             
@@ -54,8 +54,8 @@ const Contact = () => {
               </div>
               <div className="contact-info-content">
                 <h3>อีเมล</h3>
-                <p>info@homehug.com</p>
-                <p>support@homehug.com</p>
+                <p>aomsinliveindisneysland@gmail.com</p>
+                <p>aomsinliveindisneysland@gmail.com</p>
               </div>
             </div>
             
@@ -117,7 +117,7 @@ const Contact = () => {
         {/* Map */}
         <div className="contact-map">
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.5664182027525!2d100.5637383148304!3d13.746290601889993!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ecea7aed50f%3A0x6bc46a3e4f8539c2!2sSukhumvit%20Road%2C%20Khlong%20Toei%2C%20Bangkok%2010110!5e0!3m2!1sen!2sth!4v1633947385045!5m2!1sen!2sth" 
+            src="https://www.google.com/maps/place/HomeHug+PoolVilla+Pattaya/data=!4m2!3m1!1s0x0:0xd2dd6485e54246cf?sa=X&ved=1t:2428&ictx=111" 
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 
