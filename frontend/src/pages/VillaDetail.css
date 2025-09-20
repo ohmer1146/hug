@@ -209,3 +209,35 @@
     gap: 10px;
   }
 }
+/* VillaDetail.css - เพิ่มส่วนนี้ */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #6A5ACD;
+}
+
+.no-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: #f8f9fa;
+  color: #6c757d;
+  padding: 20px;
+}
+
+.no-image-placeholder p {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.no-amenities {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #6A5ACD;
+  padding: 20px;
+}

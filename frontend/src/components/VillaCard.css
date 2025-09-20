@@ -94,3 +94,12 @@
 .villa-button:hover {
   background: #8A2BE2;
 }
+/* VillaCard.css - เพิ่มส่วนนี้ */
+.no-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: #f8f9fa;
+  color: #6c757d;
+}

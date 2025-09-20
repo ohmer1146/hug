@@ -318,3 +318,12 @@
     flex-grow: 1;
   }
 }
+/* Villas.css - เพิ่มส่วนนี้ */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #6A5ACD;
+}

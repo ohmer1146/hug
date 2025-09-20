@@ -37,15 +37,16 @@ const Villas = () => {
     setFilteredVillas(filtered);
   }, [searchTerm, priceRange, villas]);
 
-  if (loading) return (
-    <div className="villas-page">
-      <div className="villas-container">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
-        </div>
+ if (loading) return (
+  <div className="villas-page">
+    <div className="villas-container">
+      <div className="loading-container">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+        <p>กำลังโหลดข้อมูล...</p>
       </div>
     </div>
-  );
+  </div>
+);
 
   return (
     <div className="villas-page">
