@@ -3,7 +3,92 @@ const router = express.Router();
 const Villa = require('../models/Villa');
 const Booking = require('../models/Booking');
 
-// Get all villas
+// ต้องวาง route พิเศษก่อน route ทั่วไป
+
+// ตรวจสอบว่ามีข้อมูลวิลล่าหรือไม่ (ต้องอยู่ก่อน :id)
+router.get('/check/data', async (req, res) => {
+  try {
+    const count = await Villa.countDocuments();
+    const villas = await Villa.find().limit(3);
+    
+    res.json({
+      totalVillas: count,
+      sampleVillas: villas
+    });
+  } catch (error) {
+    console.error('Error checking villa data:', error);
+    res.status(500).json({ message: 'Error checking villa data' });
+  }
+});
+
+// Create sample villas (ต้องอยู่ก่อน :id)
+router.post('/samples', async (req, res) => {
+  try {
+    console.log('Creating sample villas...');
+    
+    const sampleVillas = [
+      {
+        name: "วิลล่าคุณหนู",
+        description: "วิลล่าสวยงามที่พัทยา พร้อมสระว่ายน้ำส่วนตัวและวิวทะเล",
+        location: "พัทยา",
+        pricePerNight: 2500,
+        bedrooms: 3,
+        bathrooms: 2,
+        capacity: 6,
+        amenities: ["สระว่ายน้ำ", "ที่จอดรถ", "WiFi", "เครื่องปรับอากาศ", "ทีวี"],
+        images: ["https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800"],
+        coordinates: { lat: 12.9235, lng: 100.8824 },
+        available: true,
+        featured: true,
+        rating: 4.5
+      },
+      {
+        name: "วิลล่าทะเลสวย",
+        description: "วิลล่าติดทะเลที่หัวหิน พร้อมห้องนอน 4 ห้องและสวนส่วนตัว",
+        location: "หัวหิน",
+        pricePerNight: 3500,
+        bedrooms: 4,
+        bathrooms: 3,
+        capacity: 8,
+        amenities: ["สระว่ายน้ำ", "เตาบาร์บีคิว", "ที่จอดรถ", "WiFi", "ครัว"],
+        images: ["https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800"],
+        coordinates: { lat: 12.5697, lng: 99.9587 },
+        available: true,
+        featured: true,
+        rating: 4.8
+      }
+    ];
+
+    // ลบข้อมูลเก่า (optional)
+    await Villa.deleteMany({});
+    
+    // เพิ่มข้อมูลใหม่
+    const result = await Villa.insertMany(sampleVillas);
+    console.log('Sample villas created successfully');
+    
+    res.json({ 
+      message: 'Sample villas created successfully', 
+      count: result.length,
+      villas: result 
+    });
+  } catch (error) {
+    console.error('Error creating sample villas:', error);
+    res.status(500).json({ message: 'Error creating sample villas', error: error.message });
+  }
+});
+
+// Get featured villas
+router.get('/featured/featured', async (req, res) => {
+  try {
+    const villas = await Villa.find({ featured: true, available: true });
+    res.json(villas);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get all villas (route หลัก)
 router.get('/', async (req, res) => {
   try {
     const villas = await Villa.find({ available: true });
@@ -14,7 +99,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get villa by ID
+// Get villa by ID (ต้องอยู่หลัง route พิเศษทั้งหมด)
 router.get('/:id', async (req, res) => {
   try {
     const villa = await Villa.findById(req.params.id);
@@ -22,17 +107,6 @@ router.get('/:id', async (req, res) => {
       return res.status(404).json({ message: 'Villa not found' });
     }
     res.json(villa);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
-// Get featured villas
-router.get('/featured/featured', async (req, res) => {
-  try {
-    const villas = await Villa.find({ featured: true, available: true });
-    res.json(villas);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -92,48 +166,6 @@ router.get('/search', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
-  }
-});
-router.post('/samples', async (req, res) => {
-  try {
-    const sampleVillas = [
-      {
-        name: "วิลล่าคุณหนู",
-        description: "วิลล่าสวยงามที่พัทยา",
-        location: "พัทยา",
-        pricePerNight: 2500,
-        bedrooms: 3,
-        bathrooms: 2,
-        capacity: 6,
-        amenities: ["สระว่ายน้ำ", "ที่จอดรถ", "WiFi"],
-        images: ["https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400"],
-        coordinates: { lat: 12.9235, lng: 100.8824 },
-        available: true,
-        featured: true,
-        rating: 4.5
-      },
-      {
-        name: "วิลล่าทะเลสวย",
-        description: "วิลล่าติดทะเลที่หัวหิน",
-        location: "หัวหิน", 
-        pricePerNight: 3500,
-        bedrooms: 4,
-        bathrooms: 3,
-        capacity: 8,
-        amenities: ["สระว่ายน้ำ", "เตาบาร์บีคิว", "ที่จอดรถ", "WiFi"],
-        images: ["https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=400"],
-        coordinates: { lat: 12.5697, lng: 99.9587 },
-        available: true,
-        featured: true,
-        rating: 4.8
-      }
-    ];
-
-    const result = await Villa.insertMany(sampleVillas);
-    res.json({ message: 'Sample villas created', villas: result });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error creating sample villas' });
   }
 });
 
