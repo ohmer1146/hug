@@ -11,27 +11,30 @@ const Villas = () => {
   const [priceRange, setPriceRange] = useState([0, 50000]);
 
   useEffect(() => {
-    const fetchVillas = async () => {
-  try {
-    const response = await fetch('https://homehuggroup.onrender.com/api/villa');
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  const fetchVillas = async () => {
+    try {
+      const response = await fetch('https://homehuggroup.onrender.com/');
+      
+      // ตรวจสอบ content type ก่อน parse JSON
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        console.log("Server returned:", text.substring(0, 200)); // แสดง 200 ตัวแรก
+        throw new Error(`Expected JSON but got ${contentType}`);
+      }
+      
+      const data = await response.json();
+      setVillas(data);
+      setFilteredVillas(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching villas:', error);
+      setLoading(false);
     }
-    
-    const data = await response.json();
-    console.log('Fetched villas:', data); // เพิ่ม log นี้
-    setVillas(data);
-    setFilteredVillas(data);
-    setLoading(false);
-  } catch (error) {
-    console.error('Error fetching villas:', error);
-    setLoading(false);
-  }
-};
+  };
 
-    fetchVillas();
-  }, []);
+  fetchVillas();
+}, []);
 
   useEffect(() => {
     const filtered = villas.filter(villa => {
