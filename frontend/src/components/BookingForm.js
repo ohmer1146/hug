@@ -70,53 +70,52 @@ const BookingForm = ({ villa, onBookingSuccess }) => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const bookingData = {
-      villaId: villa._id,
-      villaName: villa.name,
-      checkIn: formData.checkIn,
-      checkOut: formData.checkOut,
-      guests: {
-        adults: parseInt(formData.adults),
-        children: parseInt(formData.children),
-        infants: parseInt(formData.infants)
-      },
-      guestInfo: {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phone: formData.phone
-      },
-      specialRequests: formData.specialRequests,
-      totalPrice: calculateTotal().total,
-      status: 'pending'
-    };
+    try {
+      const bookingData = {
+        villaId: villa._id,
+        villaName: villa.name,
+        checkIn: formData.checkIn,
+        checkOut: formData.checkOut,
+        guests: {
+          adults: parseInt(formData.adults),
+          children: parseInt(formData.children),
+          infants: parseInt(formData.infants)
+        },
+        guestInfo: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone
+        },
+        specialRequests: formData.specialRequests,
+        totalPrice: calculateTotal().total,
+        status: 'pending'
+      };
 
-    const response = await fetch('https://homehuggroup.onrender.com/api/bookings', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify(bookingData)
-    });
+      const response = await fetch('https://homehuggroup.onrender.com/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(bookingData)
+      });
 
-    if (response.ok) {
-      const result = await response.json();
-      // เปลี่ยนทางไปยังหน้ายืนยันการจอง
-      window.location.href = `/booking-confirmation/${result._id}`;
-    } else {
-      throw new Error('การจองล้มเหลว');
+      if (response.ok) {
+        const result = await response.json();
+        onBookingSuccess(result);
+      } else {
+        throw new Error('การจองล้มเหลว');
+      }
+    } catch (error) {
+      alert('เกิดข้อผิดพลาดในการจอง: ' + error.message);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    alert('เกิดข้อผิดพลาดในการจอง: ' + error.message);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const totals = calculateTotal();
 
