@@ -1,10 +1,15 @@
 import React, { useState, useRef } from 'react';
+import { useAuth } from '../context/AuthContext';
 import './ImageUpload.css';
 
 const ImageUpload = ({ onImagesChange, existingImages = [] }) => {
   const [images, setImages] = useState(existingImages);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
+  const { user } = useAuth();
+
+  // ตรวจสอบว่าผู้ใช้เป็นแอดมินหรือไม่
+  const isAdmin = user && user.role === 'admin';
 
   // ฟังก์ชันแปลงไฟล์เป็น Base64
   const fileToBase64 = (file) => {
@@ -18,6 +23,8 @@ const ImageUpload = ({ onImagesChange, existingImages = [] }) => {
 
   // การเลือกไฟล์
   const selectFiles = async (e) => {
+    if (!isAdmin) return;
+    
     const files = e.target.files;
     if (files.length === 0) return;
     
@@ -40,6 +47,8 @@ const ImageUpload = ({ onImagesChange, existingImages = [] }) => {
 
   // ลบรูปภาพ
   const deleteImage = (index) => {
+    if (!isAdmin) return;
+    
     const updatedImages = images.filter((_, i) => i !== index);
     setImages(updatedImages);
     onImagesChange(updatedImages);
@@ -47,16 +56,19 @@ const ImageUpload = ({ onImagesChange, existingImages = [] }) => {
 
   // การลากและวาง
   const onDragOver = (e) => {
+    if (!isAdmin) return;
     e.preventDefault();
     setIsDragging(true);
   };
 
   const onDragLeave = (e) => {
+    if (!isAdmin) return;
     e.preventDefault();
     setIsDragging(false);
   };
 
   const onDrop = async (e) => {
+    if (!isAdmin) return;
     e.preventDefault();
     setIsDragging(false);
     
@@ -80,6 +92,33 @@ const ImageUpload = ({ onImagesChange, existingImages = [] }) => {
     onImagesChange(updatedImages);
   };
 
+  // ถ้าไม่ใช่แอดมินและไม่มีรูปภาพ ให้แสดงเฉพาะรูปภาพที่มี
+  if (!isAdmin && images.length === 0) {
+    return null;
+  }
+
+  // ถ้าไม่ใช่แอดมิน แต่มีรูปภาพ ให้แสดงเฉพาะรูปภาพ (ไม่แสดงฟังก์ชันอัพโหลด)
+  if (!isAdmin && images.length > 0) {
+    return (
+      <div className="image-upload-container">
+        <div className="image-preview-container">
+          <h3 className="preview-title">ภาพวิลล่า</h3>
+          <div className="image-previews readonly">
+            {images.map((image, index) => (
+              <div key={index} className="image-preview readonly">
+                <img 
+                  src={typeof image === 'object' ? image.url : image} 
+                  alt={`Preview ${index + 1}`} 
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // สำหรับแอดมิน: แสดงฟังก์ชันอัพโหลดครบถ้วน
   return (
     <div className="image-upload-container">
       <div 
@@ -95,7 +134,7 @@ const ImageUpload = ({ onImagesChange, existingImages = [] }) => {
           </svg>
         </div>
         <p className="upload-text">คลิกหรือลากไฟล์มาวางที่นี่เพื่ออัพโหลด</p>
-        <p className="upload-subtext">รองรับไฟล์ภาพ JPG, PNG, GIF</p>
+        <p className="upload-subtext">รองรับไฟล์ภาพ JPG, PNG, GIF (เฉพาะผู้ดูแลระบบ)</p>
         <input
           type="file"
           ref={fileInputRef}

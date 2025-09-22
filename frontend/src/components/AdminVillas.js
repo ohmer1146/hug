@@ -155,11 +155,11 @@ const AdminVillas = () => {
           />
         </div>
         
-        <div className="admin-form-group admin-form-full">
-          <label className="admin-form-label">รูปภาพ</label>
-          <ImageUpload 
-            onImagesChange={handleImagesChange}
-            existingImages={formData.images}
+       <div className="admin-form-group admin-form-full">
+  <label className="admin-form-label">รูปภาพวิลล่า</label>
+  <ImageUpload 
+    onImagesChange={handleImagesChange}
+    existingImages={formData.images}
           />
         </div>
         

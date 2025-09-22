@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import BookingForm from '../components/BookingForm';
 import Reviews from '../components/Reviews';
 import Map from '../components/Map';
+import ImageUpload from '../components/ImageUpload';
 import './VillaDetail.css';
 
 const VillaDetail = () => {
@@ -11,6 +13,10 @@ const VillaDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeImage, setActiveImage] = useState(0);
+  const { user } = useAuth();
+
+  // ตรวจสอบว่าผู้ใช้เป็นแอดมินหรือไม่
+  const isAdmin = user && user.role === 'admin';
 
   // ฟังก์ชันตรวจสอบและแปลงรูปภาพ
   const getImageUrl = (image) => {
@@ -32,6 +38,31 @@ const VillaDetail = () => {
     }
     
     return null;
+  };
+
+  // ฟังก์ชันอัพเดทรูปภาพ (สำหรับแอดมินเท่านั้น)
+  const handleImagesUpdate = async (newImages) => {
+    if (!isAdmin) return;
+    
+    try {
+      const response = await fetch(`https://homehuggroup.onrender.com/api/villas/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...villa,
+          images: newImages
+        }),
+      });
+      
+      if (response.ok) {
+        const updatedVilla = await response.json();
+        setVilla(updatedVilla);
+      }
+    } catch (error) {
+      console.error('Error updating villa images:', error);
+    }
   };
 
   useEffect(() => {
@@ -95,13 +126,30 @@ const VillaDetail = () => {
           <Link to="/villas">วิลล่าทั้งหมด</Link>
           <span className="mx-2">/</span>
           <span>{villa.name}</span>
+          {isAdmin && (
+            <>
+              <span className="mx-2">•</span>
+              <span className="text-purple-600">โหมดผู้ดูแลระบบ</span>
+            </>
+          )}
         </nav>
       </div>
 
       <div className="villa-detail-container">
         {/* Villa Header */}
         <div className="villa-header">
-          <h1 className="villa-title">{villa.name}</h1>
+          <div className="villa-header-top">
+            <h1 className="villa-title">{villa.name}</h1>
+            {isAdmin && (
+              <div className="admin-badge">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                </svg>
+                โหมดแก้ไข
+              </div>
+            )}
+          </div>
+          
           <div className="villa-location">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
@@ -138,6 +186,22 @@ const VillaDetail = () => {
         <div className="villa-content">
           {/* Left Column - Images and Details */}
           <div>
+            {/* ส่วนอัพโหลดรูปภาพ (สำหรับแอดมินเท่านั้น) */}
+            {isAdmin && (
+              <div className="villa-section">
+                <h2 className="villa-section-title">จัดการรูปภาพวิลล่า</h2>
+                <div className="admin-only-message">
+                  <p className="admin-only-text">
+                    <strong>เฉพาะผู้ดูแลระบบ:</strong> คุณสามารถอัพโหลดและจัดการรูปภาพของวิลล่าได้ที่นี่
+                  </p>
+                </div>
+                <ImageUpload 
+                  onImagesChange={handleImagesUpdate}
+                  existingImages={villa.images || []}
+                />
+              </div>
+            )}
+
             {/* Main Image */}
             <div className="villa-main-image">
               {mainImageUrl ? (
@@ -151,6 +215,11 @@ const VillaDetail = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   <p>ไม่มีภาพ</p>
+                  {isAdmin && (
+                    <p className="text-sm text-gray-500 mt-2">
+                      อัพโหลดรูปภาพโดยใช้ส่วนจัดการรูปภาพด้านบน
+                    </p>
+                  )}
                 </div>
               )}
             </div>
