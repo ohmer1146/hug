@@ -285,9 +285,14 @@ const VillaDetail = () => {
           </div>
 
           {/* Right Column - Booking Form */}
-          <div className="booking-form-container">
-            <div className="booking-form">
-              <BookingForm villa={villa} onBookingSuccess={() => {}} />
+         <div className="booking-form-container">
+  <div className="booking-form">
+    <BookingForm 
+      villa={villa} 
+      onBookingSuccess={(booking) => {
+        // นำทางไปยังหน้ายืนยันการจอง
+        window.location.href = `/booking-confirmation/${booking._id}`;
+      }}  />
             </div>
           </div>
         </div>

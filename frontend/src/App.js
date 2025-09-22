@@ -23,6 +23,7 @@ function App() {
             <Route path="/booking" element={<Booking />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/booking-confirmation/:id" element={<BookingConfirmation />} />
           </Routes>
         </div>
       </Router>

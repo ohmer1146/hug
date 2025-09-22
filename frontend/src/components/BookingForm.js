@@ -1,147 +1,361 @@
-// frontend/src/components/BookingForm.js
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import { addDays, differenceInDays } from 'date-fns';
 import { useAuth } from '../context/AuthContext';
+import 'react-datepicker/dist/react-datepicker.css';
+import './BookingForm.css';
 
 const BookingForm = ({ villa, onBookingSuccess }) => {
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-  const [guests, setGuests] = useState(1);
-  const [specialRequests, setSpecialRequests] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
   const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  
+  // สถานะฟอร์ม
+  const [formData, setFormData] = useState({
+    checkIn: null,
+    checkOut: null,
+    adults: 2,
+    children: 0,
+    infants: 0,
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    specialRequests: ''
+  });
 
+  // ฟิลเตอร์วันที่ (ไม่อนุญาตให้เลือกวันที่ย้อนหลัง)
+  const isDateDisabled = (date) => {
+    return date < new Date().setHours(0, 0, 0, 0);
+  };
+
+  // คำนวณจำนวนคืน
   const calculateNights = () => {
-    if (checkIn && checkOut) {
-      const start = new Date(checkIn);
-      const end = new Date(checkOut);
-      return Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    if (formData.checkIn && formData.checkOut) {
+      const nights = differenceInDays(formData.checkOut, formData.checkIn);
+      return nights > 0 ? nights : 0;
     }
     return 0;
   };
 
+  // คำนวณราคารวม
   const calculateTotal = () => {
     const nights = calculateNights();
-    return nights * villa.pricePerNight;
+    const basePrice = villa.pricePerNight * nights;
+    const serviceFee = basePrice * 0.1; // ค่าบริการ 10%
+    const cleaningFee = 500; // ค่าทำความสะอาด
+    return {
+      nights,
+      basePrice,
+      serviceFee,
+      cleaningFee,
+      total: basePrice + serviceFee + cleaningFee
+    };
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleDateChange = (dates) => {
+    const [start, end] = dates;
+    setFormData(prev => ({
+      ...prev,
+      checkIn: start,
+      checkOut: end
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-
-    if (!user) {
-      setError('Please login to book a villa');
-      setLoading(false);
-      return;
-    }
 
     try {
+      const bookingData = {
+        villaId: villa._id,
+        villaName: villa.name,
+        checkIn: formData.checkIn,
+        checkOut: formData.checkOut,
+        guests: {
+          adults: parseInt(formData.adults),
+          children: parseInt(formData.children),
+          infants: parseInt(formData.infants)
+        },
+        guestInfo: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone
+        },
+        specialRequests: formData.specialRequests,
+        totalPrice: calculateTotal().total,
+        status: 'pending'
+      };
+
       const response = await fetch('https://homehuggroup.onrender.com/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({
-          villaId: villa._id,
-          checkIn,
-          checkOut,
-          guests,
-          specialRequests
-        })
+        body: JSON.stringify(bookingData)
       });
 
-      const data = await response.json();
-
       if (response.ok) {
-        onBookingSuccess(data);
+        const result = await response.json();
+        onBookingSuccess(result);
       } else {
-        setError(data.message || 'Booking failed');
+        throw new Error('การจองล้มเหลว');
       }
     } catch (error) {
-      setError('An error occurred. Please try again.');
+      alert('เกิดข้อผิดพลาดในการจอง: ' + error.message);
     } finally {
       setLoading(false);
     }
   };
 
+  const totals = calculateTotal();
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h3 className="text-xl font-semibold mb-4">Book This Villa</h3>
-      <p className="text-2xl font-bold text-blue-600 mb-4">฿{villa.pricePerNight.toLocaleString()} <span className="text-sm font-normal text-gray-600">per night</span></p>
-      
-      {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{error}</div>}
-      
-      <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Check-in</label>
+    <div className="booking-form-container">
+      <div className="booking-price-section">
+        <div className="price-display">
+          <span className="price-amount">฿{villa.pricePerNight.toLocaleString('th-TH')}</span>
+          <span className="price-period">/ คืน</span>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="booking-form">
+        {/* ส่วนเลือกวันที่ */}
+        <div className="form-section">
+          <label className="form-label">วันที่เข้าพัก</label>
+          <div className="date-picker-container">
+            <DatePicker
+              selected={formData.checkIn}
+              onChange={handleDateChange}
+              startDate={formData.checkIn}
+              endDate={formData.checkOut}
+              selectsRange
+              minDate={new Date()}
+              filterDate={isDateDisabled}
+              monthsShown={2}
+              className="date-picker-input"
+              placeholderText="เลือกวันที่เช็คอิน - เช็คเอาท์"
+              dateFormat="dd/MM/yyyy"
+            />
+            <svg className="calendar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        </div>
+
+        {/* ส่วนเลือกจำนวนผู้เข้าพัก */}
+        <div className="form-section">
+          <label className="form-label">ผู้เข้าพัก</label>
+          <div className="guests-selector">
+            <div className="guest-type">
+              <div className="guest-info">
+                <span className="guest-label">ผู้ใหญ่</span>
+                <span className="guest-age">อายุ 13+</span>
+              </div>
+              <div className="guest-counter">
+                <button 
+                  type="button"
+                  className="counter-btn"
+                  onClick={() => setFormData(prev => ({ 
+                    ...prev, 
+                    adults: Math.max(1, prev.adults - 1) 
+                  }))}
+                >
+                  -
+                </button>
+                <span className="guest-count">{formData.adults}</span>
+                <button 
+                  type="button"
+                  className="counter-btn"
+                  onClick={() => setFormData(prev => ({ 
+                    ...prev, 
+                    adults: Math.min(villa.capacity, prev.adults + 1) 
+                  }))}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className="guest-type">
+              <div className="guest-info">
+                <span className="guest-label">เด็ก</span>
+                <span className="guest-age">อายุ 2-12</span>
+              </div>
+              <div className="guest-counter">
+                <button 
+                  type="button"
+                  className="counter-btn"
+                  onClick={() => setFormData(prev => ({ 
+                    ...prev, 
+                    children: Math.max(0, prev.children - 1) 
+                  }))}
+                >
+                  -
+                </button>
+                <span className="guest-count">{formData.children}</span>
+                <button 
+                  type="button"
+                  className="counter-btn"
+                  onClick={() => setFormData(prev => ({ 
+                    ...prev, 
+                    children: Math.min(villa.capacity - formData.adults, prev.children + 1) 
+                  }))}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className="guest-type">
+              <div className="guest-info">
+                <span className="guest-label">ทารก</span>
+                <span className="guest-age">อายุต่ำกว่า 2</span>
+              </div>
+              <div className="guest-counter">
+                <button 
+                  type="button"
+                  className="counter-btn"
+                  onClick={() => setFormData(prev => ({ 
+                    ...prev, 
+                    infants: Math.max(0, prev.infants - 1) 
+                  }))}
+                >
+                  -
+                </button>
+                <span className="guest-count">{formData.infants}</span>
+                <button 
+                  type="button"
+                  className="counter-btn"
+                  onClick={() => setFormData(prev => ({ 
+                    ...prev, 
+                    infants: prev.infants + 1 
+                  }))}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* สรุปราคา */}
+        {totals.nights > 0 && (
+          <div className="price-summary">
+            <div className="price-line">
+              <span>฿{villa.pricePerNight.toLocaleString('th-TH')} x {totals.nights} คืน</span>
+              <span>฿{totals.basePrice.toLocaleString('th-TH')}</span>
+            </div>
+            <div className="price-line">
+              <span>ค่าบริการ</span>
+              <span>฿{totals.serviceFee.toLocaleString('th-TH')}</span>
+            </div>
+            <div className="price-line">
+              <span>ค่าทำความสะอาด</span>
+              <span>฿{totals.cleaningFee.toLocaleString('th-TH')}</span>
+            </div>
+            <div className="price-total">
+              <span>รวมทั้งหมด</span>
+              <span>฿{totals.total.toLocaleString('th-TH')}</span>
+            </div>
+          </div>
+        )}
+
+        {/* ข้อมูลผู้จอง */}
+        <div className="form-section">
+          <h3 className="section-title">ข้อมูลผู้จอง</h3>
+          <div className="name-fields">
+            <div className="form-group">
+              <label className="form-label">ชื่อ</label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                className="form-input"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">นามสกุล</label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                className="form-input"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">อีเมล</label>
             <input
-              type="date"
-              value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
-              min={new Date().toISOString().split('T')[0]}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="form-input"
               required
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Check-out</label>
+
+          <div className="form-group">
+            <label className="form-label">เบอร์โทรศัพท์</label>
             <input
-              type="date"
-              value={checkOut}
-              onChange={(e) => setCheckOut(e.target.value)}
-              min={checkIn || new Date().toISOString().split('T')[0]}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              className="form-input"
               required
             />
           </div>
-        </div>
-        
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Guests</label>
-          <select
-            value={guests}
-            onChange={(e) => setGuests(parseInt(e.target.value))}
-            className="w-full p-2 border border-gray-300 rounded-md"
-            required
-          >
-            {Array.from({ length: villa.capacity }, (_, i) => i + 1).map(num => (
-              <option key={num} value={num}>{num} {num === 1 ? 'guest' : 'guests'}</option>
-            ))}
-          </select>
-        </div>
-        
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Special Requests</label>
-          <textarea
-            value={specialRequests}
-            onChange={(e) => setSpecialRequests(e.target.value)}
-            rows="3"
-            className="w-full p-2 border border-gray-300 rounded-md"
-            placeholder="Any special requests or requirements..."
-          />
-        </div>
-        
-        <div className="border-t border-gray-200 pt-4 mb-4">
-          <div className="flex justify-between mb-2">
-            <span>₿{villa.pricePerNight.toLocaleString()} x {calculateNights()} nights</span>
-            <span>₿{(villa.pricePerNight * calculateNights()).toLocaleString()}</span>
-          </div>
-          <div className="flex justify-between font-bold text-lg">
-            <span>Total</span>
-            <span>₿{calculateTotal().toLocaleString()}</span>
+
+          <div className="form-group">
+            <label className="form-label">คำขอพิเศษ (ถ้ามี)</label>
+            <textarea
+              name="specialRequests"
+              value={formData.specialRequests}
+              onChange={handleInputChange}
+              className="form-textarea"
+              rows="3"
+              placeholder="เช่น อาหารเจ, เตียงเสริม, ฯลฯ"
+            />
           </div>
         </div>
-        
-        <button
-          type="submit"
-          disabled={loading || calculateNights() === 0}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+
+        {/* ปุ่มจอง */}
+        <button 
+          type="submit" 
+          className="booking-button"
+          disabled={loading || !formData.checkIn || !formData.checkOut}
         >
-          {loading ? 'Processing...' : 'Book Now'}
+          {loading ? (
+            <>
+              <svg className="spinner" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+              </svg>
+              กำลังดำเนินการ...
+            </>
+          ) : (
+            `จองตอนนี้ - ฿${totals.total > 0 ? totals.total.toLocaleString('th-TH') : '0'}`
+          )}
         </button>
+
+        <div className="booking-note">
+          <p>คุณจะไม่ถูกเรียกเก็บเงินทันที การยืนยันการจองจะถูกส่งไปยังอีเมลของคุณ</p>
+        </div>
       </form>
     </div>
   );
