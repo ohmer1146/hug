@@ -9,6 +9,7 @@ import About from './pages/About';
 import Booking from './pages/Booking';
 import Contact from './pages/Contact';
 import AdminDashboard from './pages/AdminDashboard';
+import BookingConfirmation from './pages/BookingConfirmation';
 
 function App() {
   return (
