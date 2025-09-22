@@ -12,17 +12,23 @@ const Villas = () => {
 
   useEffect(() => {
     const fetchVillas = async () => {
-      try {
-        const response = await fetch('https://homehuggroup.onrender.com/api/villas');
-        const data = await response.json();
-        setVillas(data);
-        setFilteredVillas(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching villas:', error);
-        setLoading(false);
-      }
-    };
+  try {
+    const response = await fetch('https://homehuggroup.onrender.com/api/villa');
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    console.log('Fetched villas:', data); // เพิ่ม log นี้
+    setVillas(data);
+    setFilteredVillas(data);
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching villas:', error);
+    setLoading(false);
+  }
+};
 
     fetchVillas();
   }, []);
