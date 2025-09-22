@@ -3,6 +3,28 @@ import { Link } from 'react-router-dom';
 import './VillaCard.css';
 
 const VillaCard = ({ villa }) => {
+  // ฟังก์ชันตรวจสอบและแปลงรูปภาพ
+  const getImageUrl = (image) => {
+    if (!image) return null;
+    
+    // ถ้าเป็น Base64 string
+    if (typeof image === 'string' && image.startsWith('data:image')) {
+      return image;
+    }
+    
+    // ถ้าเป็น URL
+    if (typeof image === 'string') {
+      return image;
+    }
+    
+    // ถ้าเป็น object ที่มีข้อมูลรูปภาพ
+    if (typeof image === 'object' && image.url) {
+      return image.url;
+    }
+    
+    return null;
+  };
+
   if (!villa) {
     return (
       <div className="villa-card">
@@ -23,11 +45,13 @@ const VillaCard = ({ villa }) => {
     );
   }
 
+  const mainImage = villa.images && villa.images.length > 0 ? getImageUrl(villa.images[0]) : null;
+
   return (
     <div className="villa-card">
       <div className="villa-image">
-        {villa.images && villa.images[0] ? (
-          <img src={villa.images[0]} alt={villa.name} />
+        {mainImage ? (
+          <img src={mainImage} alt={villa.name} />
         ) : (
           <div className="no-image-placeholder">
             <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

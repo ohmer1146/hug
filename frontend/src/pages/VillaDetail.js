@@ -12,6 +12,28 @@ const VillaDetail = () => {
   const [error, setError] = useState('');
   const [activeImage, setActiveImage] = useState(0);
 
+  // ฟังก์ชันตรวจสอบและแปลงรูปภาพ
+  const getImageUrl = (image) => {
+    if (!image) return null;
+    
+    // ถ้าเป็น Base64 string
+    if (typeof image === 'string' && image.startsWith('data:image')) {
+      return image;
+    }
+    
+    // ถ้าเป็น URL
+    if (typeof image === 'string') {
+      return image;
+    }
+    
+    // ถ้าเป็น object ที่มีข้อมูลรูปภาพ
+    if (typeof image === 'object' && image.url) {
+      return image.url;
+    }
+    
+    return null;
+  };
+
   useEffect(() => {
     const fetchVilla = async () => {
       try {
@@ -59,6 +81,9 @@ const VillaDetail = () => {
       </div>
     </div>
   );
+
+  const mainImageUrl = villa.images && villa.images.length > 0 ? 
+    getImageUrl(villa.images[activeImage]) : null;
 
   return (
     <div className="villa-detail-page">
@@ -115,9 +140,9 @@ const VillaDetail = () => {
           <div>
             {/* Main Image */}
             <div className="villa-main-image">
-              {villa.images && villa.images.length > 0 ? (
+              {mainImageUrl ? (
                 <img 
-                  src={villa.images[activeImage]} 
+                  src={mainImageUrl} 
                   alt={villa.name} 
                 />
               ) : (
@@ -133,18 +158,21 @@ const VillaDetail = () => {
             {/* Thumbnails */}
             {villa.images && villa.images.length > 1 && (
               <div className="villa-thumbnails">
-                {villa.images.map((image, index) => (
-                  <div 
-                    key={index} 
-                    className={`villa-thumbnail ${activeImage === index ? 'active' : ''}`}
-                    onClick={() => setActiveImage(index)}
-                  >
-                    <img 
-                      src={image} 
-                      alt={`${villa.name} ${index + 1}`} 
-                    />
-                  </div>
-                ))}
+                {villa.images.map((image, index) => {
+                  const imageUrl = getImageUrl(image);
+                  return imageUrl ? (
+                    <div 
+                      key={index} 
+                      className={`villa-thumbnail ${activeImage === index ? 'active' : ''}`}
+                      onClick={() => setActiveImage(index)}
+                    >
+                      <img 
+                        src={imageUrl} 
+                        alt={`${villa.name} ${index + 1}`} 
+                      />
+                    </div>
+                  ) : null;
+                })}
               </div>
             )}
 
