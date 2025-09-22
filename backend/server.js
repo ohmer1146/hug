@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const guestBookingsRoutes = require('./routes/guestBookings');
 
 // Middleware
 app.use(cors({
@@ -31,6 +32,7 @@ mongoose.connect(MONGODB_URI)
 app.use('/api/villas', require('./routes/villas'));
 app.use('/api/bookings', require('./routes/bookings'));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/bookings/guest', guestBookingsRoutes);
 app.use('/api/contacts', require('./routes/contacts'));
 app.use('/api/reviews', require('./routes/reviews'));
 
