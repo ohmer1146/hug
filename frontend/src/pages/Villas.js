@@ -10,27 +10,92 @@ const Villas = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [priceRange, setPriceRange] = useState([0, 50000]);
 
-  useEffect(() => {
+ useEffect(() => {
   const fetchVillas = async () => {
     try {
-      const response = await fetch('https://homehuggroup.onrender.com/');
+      console.log('🔄 กำลังโหลดข้อมูลวิลล่า...');
+      const response = await fetch('https://homehuggroup.onrender.com/api/villas');
       
-      // ตรวจสอบ content type ก่อน parse JSON
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        const text = await response.text();
-        console.log("Server returned:", text.substring(0, 200)); // แสดง 200 ตัวแรก
-        throw new Error(`Expected JSON but got ${contentType}`);
+      console.log('📊 Response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      const data = await response.json();
-      setVillas(data);
-      setFilteredVillas(data);
-      setLoading(false);
+      const contentType = response.headers.get('content-type');
+      console.log('📄 Content-Type:', contentType);
+      
+      if (contentType && contentType.includes('application/json')) {
+        const data = await response.json();
+        console.log('✅ ข้อมูลวิลล่าที่ได้รับ:', data);
+        
+        if (data && Array.isArray(data) && data.length > 0) {
+          setVillas(data);
+          setFilteredVillas(data);
+          console.log(`✅ โหลดข้อมูลวิลล่าได้ ${data.length} หลัง`);
+        } else {
+          console.log('⚠️  API ส่งกลับข้อมูลว่างหรือไม่ใช่ array');
+          // ใช้ mock data ถ้า API ส่งกลับข้อมูลว่าง
+          useMockData();
+        }
+      } else {
+        const text = await response.text();
+        console.log('❌ Server ส่งกลับไม่ใช่ JSON:', text.substring(0, 200));
+        useMockData();
+      }
+      
     } catch (error) {
-      console.error('Error fetching villas:', error);
+      console.error('❌ Error ในการโหลดข้อมูล:', error);
+      useMockData();
+    } finally {
       setLoading(false);
     }
+  };
+
+  // ฟังก์ชันใช้ข้อมูลตัวอย่าง
+  const useMockData = () => {
+    console.log('🔄 ใช้ข้อมูลตัวอย่างแทน');
+    const mockVillas = [
+      {
+        _id: "1",
+        name: "วิลล่าคุณหนู",
+        location: "พัทยา",
+        pricePerNight: 2500,
+        images: ["https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400"],
+        bedrooms: 3,
+        bathrooms: 2,
+        capacity: 6,
+        area: 120,
+        available: true
+      },
+      {
+        _id: "2", 
+        name: "วิลล่าทะเลสวย",
+        location: "หัวหิน",
+        pricePerNight: 3500,
+        images: ["https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=400"],
+        bedrooms: 4,
+        bathrooms: 3,
+        capacity: 8,
+        area: 150,
+        available: true
+      },
+      {
+        _id: "3",
+        name: "วิลล่าภูเขาร่มรื่น", 
+        location: "เชียงใหม่",
+        pricePerNight: 2800,
+        images: ["https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=400"],
+        bedrooms: 3,
+        bathrooms: 2,
+        capacity: 5,
+        area: 100,
+        available: true
+      }
+    ];
+    
+    setVillas(mockVillas);
+    setFilteredVillas(mockVillas);
   };
 
   fetchVillas();

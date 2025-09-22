@@ -94,5 +94,47 @@ router.get('/search', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+router.post('/samples', async (req, res) => {
+  try {
+    const sampleVillas = [
+      {
+        name: "วิลล่าคุณหนู",
+        description: "วิลล่าสวยงามที่พัทยา",
+        location: "พัทยา",
+        pricePerNight: 2500,
+        bedrooms: 3,
+        bathrooms: 2,
+        capacity: 6,
+        amenities: ["สระว่ายน้ำ", "ที่จอดรถ", "WiFi"],
+        images: ["https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400"],
+        coordinates: { lat: 12.9235, lng: 100.8824 },
+        available: true,
+        featured: true,
+        rating: 4.5
+      },
+      {
+        name: "วิลล่าทะเลสวย",
+        description: "วิลล่าติดทะเลที่หัวหิน",
+        location: "หัวหิน", 
+        pricePerNight: 3500,
+        bedrooms: 4,
+        bathrooms: 3,
+        capacity: 8,
+        amenities: ["สระว่ายน้ำ", "เตาบาร์บีคิว", "ที่จอดรถ", "WiFi"],
+        images: ["https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=400"],
+        coordinates: { lat: 12.5697, lng: 99.9587 },
+        available: true,
+        featured: true,
+        rating: 4.8
+      }
+    ];
+
+    const result = await Villa.insertMany(sampleVillas);
+    res.json({ message: 'Sample villas created', villas: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error creating sample villas' });
+  }
+});
 
 module.exports = router;
