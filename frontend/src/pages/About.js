@@ -167,9 +167,9 @@ const About = () => {
           
           <div className="team-grid">
             {[
-              { name: "โอเบ็นเท็น", role: "ผู้ก่อตั้ง", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" },
-              { name: "uset", role: "ผู้จัดการทั่วไป", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" },
-              { name: "คุณโอ๊ต", role: "หัวหน้าฝ่ายบริการ", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" }
+              { name: "โอเบ็นเท็น", role: "ผู้ก่อตั้ง", img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523453567.jpg?k=b97f0dc98d43db8bc076acc5a06a7b6f37ce2b07996188564de4d96a16279bd5&o=&hp=1" },
+              { name: "uset", role: "ผู้จัดการทั่วไป", img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523453567.jpg?k=b97f0dc98d43db8bc076acc5a06a7b6f37ce2b07996188564de4d96a16279bd5&o=&hp=1" },
+              { name: "คุณโอ๊ต", role: "หัวหน้าฝ่ายบริการ", img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523453567.jpg?k=b97f0dc98d43db8bc076acc5a06a7b6f37ce2b07996188564de4d96a16279bd5&o=&hp=1" }
             ].map((member, index) => (
               <div key={index} className="team-card">
                 <div className="team-image">
