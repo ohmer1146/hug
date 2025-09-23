@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
@@ -6,10 +5,6 @@ import './Navbar.css';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   const isActiveLink = (path) => {
     return location.pathname === path ? 'nav-link active' : 'nav-link';
@@ -37,7 +32,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="nav-toggle" onClick={toggleMenu}>
+        <div className="nav-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <span className="bar"></span>
           <span className="bar"></span>
           <span className="bar"></span>
