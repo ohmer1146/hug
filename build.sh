@@ -1,17 +1,22 @@
 #!/bin/bash
-set -e  # Exit immediately if a command exits with a non-zero status.
 
-echo "=== Starting Optimized Build Process ==="
+echo "=== Starting Build Process ==="
 
-# Build frontend first (ใช้ cache ให้มากขึ้น)
-echo "📦 Building frontend..."
+# Build frontend
+echo "Building frontend..."
 cd frontend
 
-echo "Installing frontend dependencies with cache..."
-npm ci --prefer-offline --no-audit --silent
+echo "Installing frontend dependencies..."
+if ! npm install; then
+    echo "❌ Frontend npm install failed!"
+    exit 1
+fi
 
 echo "Building frontend application..."
-npm run build --silent
+if ! npm run build; then
+    echo "❌ Frontend build failed!"
+    exit 1
+fi
 
 # Check if build directory exists
 if [ ! -d "build" ]; then
@@ -21,12 +26,15 @@ fi
 
 echo "✅ Frontend build completed successfully!"
 
-# Build backend (เร็วขึ้น)
-echo "⚡ Building backend..."
+# Build backend
+echo "Building backend..."
 cd ../backend
 
-echo "Installing backend dependencies with cache..."
-npm ci --prefer-offline --no-audit --silent
+echo "Installing backend dependencies..."
+if ! npm install; then
+    echo "❌ Backend npm install failed!"
+    exit 1
+fi
 
 echo "✅ Backend build completed successfully!"
 echo "=== Build process completed ==="
