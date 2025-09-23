@@ -15,10 +15,10 @@ const Booking = () => {
   const villas = [
     {
       id: 1,
-      name: "Grand Palace Villa",
+      name: "Home Hug poolvilla",
       location: "พัทยา, ประเทศไทย",
       price: 12500,
-      image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1",
       features: ["สระว่ายน้ำส่วนตัว", "วิวทะเล", "4 ผู้เข้าพัก", "3 ห้องนอน"],
       guests: 4,
       bedrooms: 3,
@@ -26,10 +26,10 @@ const Booking = () => {
     },
     {
       id: 2,
-      name: "Ocean Breeze Villa",
+      name: "Home Hug poolvilla",
       location: "พัทยา, ประเทศไทย",
       price: 18900,
-      image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1",
       features: ["อินฟินิตี้พูล", "ทางเข้าหาดส่วนตัว", "6 ผู้เข้าพัก", "4 ห้องนอน"],
       guests: 6,
       bedrooms: 4,
@@ -37,10 +37,10 @@ const Booking = () => {
     },
     {
       id: 3,
-      name: "Royal Sunset Villa",
+      name: "Home Hug poolvilla",
       location: "พัทยา, ประเทศไทย",
       price: 9800,
-      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1",
       features: ["วิวพระอาทิตย์ตก", "สวนส่วนตัว", "4 ผู้เข้าพัก", "2 ห้องนอน"],
       guests: 4,
       bedrooms: 2,

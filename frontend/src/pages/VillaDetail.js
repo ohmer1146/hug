@@ -24,8 +24,8 @@ const VillaDetail = () => {
             location: "พัทยา",
             pricePerNight: 3000,
             images: [
-              "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-              "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800"
+              "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1",
+              "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1"
             ],
             bedrooms: 3,
             bathrooms: 2,
@@ -81,7 +81,7 @@ const VillaDetail = () => {
         <div className="villa-images">
           <div className="main-image">
             <img 
-              src={villa.images?.[activeImage] || "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800"} 
+              src={villa.images?.[activeImage] || "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523453567.jpg?k=b97f0dc98d43db8bc076acc5a06a7b6f37ce2b07996188564de4d96a16279bd5&o=&hp=1"} 
               alt={villa.name} 
             />
           </div>
