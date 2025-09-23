@@ -11,55 +11,39 @@ const Villas = () => {
   const [priceRange, setPriceRange] = useState([0, 50000]);
 
 useEffect(() => {
-  // ข้อมูลตัวอย่างชั่วคราว
-  const mockVillas = [
-    {
-      _id: "1",
-      name: "วิลล่าคุณหนู",
-      location: "พัทยา",
-      pricePerNight: 2500,
-      images: ["https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400"],
-      bedrooms: 3,
-      bathrooms: 2,
-      capacity: 6,
-      area: 120,
-      available: true
-    },
-    {
-      _id: "2", 
-      name: "วิลล่าทะเลสวย",
-      location: "หัวหิน",
-      pricePerNight: 3500,
-      images: ["https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=400"],
-      bedrooms: 4,
-      bathrooms: 3,
-      capacity: 8,
-      area: 150,
-      available: true
-    }
-  ];
-
-  setVillas(mockVillas);
-  setFilteredVillas(mockVillas);
-  setLoading(false);
-
-  // พยายามเรียก API จริง (optional)
-  const fetchRealData = async () => {
+  const fetchVillas = async () => {
     try {
+      console.log('🔄 กำลังโหลดข้อมูลวิลล่าจาก API...');
       const response = await fetch('https://homehuggroup.onrender.com/api/villas');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.length > 0) {
-          setVillas(data);
-          setFilteredVillas(data);
-        }
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
+      const data = await response.json();
+      console.log('📊 ข้อมูลจาก API:', data);
+      
+      if (Array.isArray(data) && data.length > 0) {
+        // ใช้ข้อมูลจริงจาก API
+        setVillas(data);
+        setFilteredVillas(data);
+        console.log(`✅ โหลดข้อมูลวิลล่าได้ ${data.length} หลัง`);
+      } else {
+        console.log('ℹ️  ไม่มีข้อมูลวิลล่าในระบบ');
+        setVillas([]);
+        setFilteredVillas([]);
+      }
+      
     } catch (error) {
-      console.log('ใช้ข้อมูลตัวอย่างแทน API');
+      console.error('❌ เกิดข้อผิดพลาด:', error);
+      setVillas([]);
+      setFilteredVillas([]);
+    } finally {
+      setLoading(false);
     }
   };
-  
-  fetchRealData();
+
+  fetchVillas();
 }, []);
 
   useEffect(() => {
