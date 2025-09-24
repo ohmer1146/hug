@@ -54,7 +54,7 @@ const FeaturedVillas = () => {
         </div>
         
         <div className="view-all">
-          <Link to="/villas" className="btn btn-primary">View All Villas</Link> {/* เปลี่ยนเป็น Link */}
+          <Link to="/villas" className="btn btn-primary">View All Villas</Link>
         </div>
       </div>
     </section>

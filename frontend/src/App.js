@@ -12,6 +12,7 @@ import Booking from './pages/Booking';
 import Contact from './pages/Contact';
 import AdminDashboard from './pages/AdminDashboard';
 import BookingConfirmation from './pages/BookingConfirmation';
+import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
 
 function App() {
@@ -19,20 +20,26 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="App">
-          <Navbar />
+          <ErrorBoundary>
+            <Navbar />
+          </ErrorBoundary>
           <main className="main-content">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/villas" element={<Villas />} />
-              <Route path="/villa/:id" element={<VillaDetail />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/booking" element={<Booking />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/booking-confirmation/:id" element={<BookingConfirmation />} />
-            </Routes>
+            <ErrorBoundary>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/villas" element={<Villas />} />
+                <Route path="/villa/:id" element={<VillaDetail />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/booking" element={<Booking />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/booking-confirmation/:id" element={<BookingConfirmation />} />
+              </Routes>
+            </ErrorBoundary>
           </main>
-          <Footer />
+          <ErrorBoundary>
+            <Footer />
+          </ErrorBoundary>
         </div>
       </Router>
     </AuthProvider>

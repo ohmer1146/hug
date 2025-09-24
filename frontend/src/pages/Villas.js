@@ -44,7 +44,7 @@ const Villas = () => {
       const mockVillas = [
         {
           _id: "1",
-          name: "วิลล่าคุณหนู",
+          name: "โฮมฮักวิลล่า",
           description: "วิลล่าสวยงามที่พัทยา",
           location: "พัทยา",
           pricePerNight: 2500,
@@ -59,7 +59,7 @@ const Villas = () => {
         },
         {
           _id: "2", 
-          name: "วิลล่าทะเลสวย",
+          name: "โฮมฮักวิลล่า",
           description: "วิลล่าติดทะเลที่หัวหิน",
           location: "หัวหิน",
           pricePerNight: 3500,
