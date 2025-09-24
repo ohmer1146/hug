@@ -1,4 +1,4 @@
-// VillaCard.js
+// src/components/VillaCard.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './VillaCard.css';
@@ -8,10 +8,10 @@ const VillaCard = ({ villa }) => {
   if (!villa) {
     return (
       <div className="villa-card error">
-        <div className="no-image-placeholder">
-          <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
+        <div className="villa-image">
+          <div className="no-image-placeholder">
+            <i className="fas fa-home"></i>
+          </div>
         </div>
         <div className="villa-content">
           <h3 className="villa-name">ไม่พบข้อมูลวิลล่า</h3>
@@ -23,42 +23,66 @@ const VillaCard = ({ villa }) => {
     );
   }
 
-  // ประกาศ mainImage ให้ถูกต้อง
+  // ฟังก์ชันดึง URL รูปภาพ
+  const getImageUrl = (image) => {
+    if (!image) return null;
+    
+    if (typeof image === 'string') {
+      return image;
+    }
+    
+    if (typeof image === 'object' && image.url) {
+      return image.url;
+    }
+    
+    return null;
+  };
+
   const mainImage = villa.images && villa.images.length > 0 
-    ? (typeof villa.images[0] === 'string' ? villa.images[0] : 
-       (villa.images[0].url ? villa.images[0].url : null))
+    ? getImageUrl(villa.images[0]) 
     : null;
+
+  const price = villa.pricePerNight || 0;
+  const bedrooms = villa.bedrooms || 0;
+  const bathrooms = villa.bathrooms || 0;
+  const capacity = villa.capacity || villa.guests || 0;
 
   return (
     <div className="villa-card">
       <div className="villa-image">
         {mainImage ? (
-          <img src={mainImage} alt={villa.name || 'Villa image'} />
-        ) : (
-          <div className="no-image-placeholder">
-            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
-        )}
+          <img src={mainImage} alt={villa.name} onError={(e) => {
+            e.target.style.display = 'none';
+            e.target.nextSibling.style.display = 'flex';
+          }} />
+        ) : null}
+        <div className={`no-image-placeholder ${mainImage ? 'hidden' : ''}`}>
+          <i className="fas fa-home"></i>
+        </div>
         <div className="villa-price">
-          ฿{villa.pricePerNight ? villa.pricePerNight.toLocaleString('th-TH') : '0'}
+          ฿{price.toLocaleString('th-TH')}<span>/คืน</span>
         </div>
       </div>
+      
       <div className="villa-content">
         <h3 className="villa-name">{villa.name || 'ไม่มีชื่อวิลล่า'}</h3>
         <p className="villa-location">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
+          <i className="fas fa-map-marker-alt"></i>
           {villa.location || 'ไม่ทราบที่ตั้ง'}
         </p>
+        
         <div className="villa-features">
-          <span className="villa-feature">{villa.bedrooms || 0} ห้องนอน</span>
-          <span className="villa-feature">{villa.bathrooms || 0} ห้องน้ำ</span>
-          <span className="villa-feature">{villa.capacity || 0} ผู้เข้าพัก</span>
+          <span className="villa-feature">
+            <i className="fas fa-bed"></i> {bedrooms} ห้องนอน
+          </span>
+          <span className="villa-feature">
+            <i className="fas fa-bath"></i> {bathrooms} ห้องน้ำ
+          </span>
+          <span className="villa-feature">
+            <i className="fas fa-users"></i> {capacity} ผู้เข้าพัก
+          </span>
         </div>
+        
         <Link to={`/villa/${villa._id}`} className="villa-button">
           ดูรายละเอียด
         </Link>

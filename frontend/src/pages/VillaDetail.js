@@ -1,4 +1,4 @@
-// VillaDetail.js - แก้ไขส่วนของ images
+// src/pages/VillaDetail.js
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './VillaDetail.css';
@@ -10,61 +10,53 @@ const VillaDetail = () => {
   const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
+    // ตรวจสอบว่า id มีค่าและไม่ใช่ "undefined"
+    if (!id || id === 'undefined') {
+      setLoading(false);
+      return;
+    }
+
     const fetchVilla = async () => {
       try {
+        console.log('กำลังโหลดวิลล่ารหัส:', id);
         const response = await fetch(`https://homehuggroup.onrender.com/api/villas/${id}`);
+        
         if (response.ok) {
           const data = await response.json();
           setVilla(data);
         } else {
           // ใช้ข้อมูลตัวอย่างหาก API ล้มเหลว
-          setVilla({
-            _id: id,
-            name: "วิลล่าตัวอย่าง",
-            description: "วิลล่าสวยงามพร้อมสิ่งอำนวยความสะดวกครบครัน",
-            location: "พัทยา",
-            pricePerNight: 3000,
-            images: [
-              "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1",
-              "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1"
-            ],
-            bedrooms: 3,
-            bathrooms: 2,
-            capacity: 6,
-            amenities: ["สระว่ายน้ำ", "ที่จอดรถ", "WiFi", "เครื่องปรับอากาศ"],
-            rating: 4.5,
-            reviewCount: 15
-          });
+          useSampleVilla();
         }
       } catch (error) {
         console.error('Error fetching villa:', error);
-        // ใช้ข้อมูลตัวอย่างหากเกิด error
-        setVilla({
-          _id: id,
-          name: "Home Hug Pool Villa",
-          description: "พูลวิลล่าสุดหรูในพัทยา",
-          location: "พัทยา, ประเทศไทย",
-          pricePerNight: 12500,
-          images: [
-            "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1"
-          ],
-          bedrooms: 3,
-          bathrooms: 2,
-          capacity: 6,
-          amenities: ["สระว่ายน้ำส่วนตัว", "ที่จอดรถ", "WiFi"],
-          rating: 4.5,
-          reviewCount: 15
-        });
+        useSampleVilla();
       } finally {
         setLoading(false);
       }
     };
 
-    if (id && id !== 'undefined') {
-      fetchVilla();
-    } else {
-      setLoading(false);
-    }
+    const useSampleVilla = () => {
+      setVilla({
+        _id: id,
+        name: "Home Hug Pool Villa",
+        description: "พูลวิลล่าสุดหรูในพัทยา พร้อมสระว่ายน้ำส่วนตัวและสิ่งอำนวยความสะดวกครบครัน ตั้งอยู่ในทำเลที่ดีใกล้ทะเลและแหล่งช้อปปิ้ง",
+        location: "พัทยา, ประเทศไทย",
+        pricePerNight: 12500,
+        images: [
+          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1",
+          "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1"
+        ],
+        bedrooms: 3,
+        bathrooms: 2,
+        capacity: 6,
+        amenities: ["สระว่ายน้ำส่วนตัว", "ที่จอดรถ", "WiFi", "เครื่องปรับอากาศ", "ทีวี", "ครัวพร้อม"],
+        rating: 4.5,
+        reviewCount: 15
+      });
+    };
+
+    fetchVilla();
   }, [id]);
 
   if (loading) {
@@ -83,20 +75,20 @@ const VillaDetail = () => {
       <div className="villa-detail-page">
         <div className="not-found">
           <h2>ไม่พบวิลล่า</h2>
+          <p>ขออภัย ไม่พบวิลล่าที่คุณกำลังมองหา</p>
           <Link to="/villas" className="btn btn-primary">กลับไปหน้าวิลล่า</Link>
         </div>
       </div>
     );
   }
 
-  // ประกาศตัวแปร images ให้ปลอดภัย
+  // ตรวจสอบ images
   const images = villa.images && Array.isArray(villa.images) ? villa.images : [];
-  const defaultImage = "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523453567.jpg?k=b97f0dc98d43db8bc076acc5a06a7b6f37ce2b07996188564de4d96a16279bd5&o=&hp=1";
+  const defaultImage = "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1";
 
   return (
     <div className="villa-detail-page">
       <div className="villa-detail-container">
-        {/* Breadcrumb */}
         <nav className="breadcrumb">
           <Link to="/">หน้าแรก</Link> &gt; 
           <Link to="/villas">วิลล่า</Link> &gt; 
@@ -108,20 +100,28 @@ const VillaDetail = () => {
           <div className="main-image">
             <img 
               src={images[activeImage] || defaultImage} 
-              alt={villa.name} 
+              alt={villa.name}
+              onError={(e) => {
+                e.target.src = defaultImage;
+              }}
             />
           </div>
-          <div className="image-thumbnails">
-            {images.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`${villa.name} ${index + 1}`}
-                className={index === activeImage ? 'active' : ''}
-                onClick={() => setActiveImage(index)}
-              />
-            ))}
-          </div>
+          {images.length > 1 && (
+            <div className="image-thumbnails">
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`${villa.name} ${index + 1}`}
+                  className={index === activeImage ? 'active' : ''}
+                  onClick={() => setActiveImage(index)}
+                  onError={(e) => {
+                    e.target.src = defaultImage;
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Villa Info */}
@@ -136,18 +136,18 @@ const VillaDetail = () => {
           </div>
 
           <div className="villa-price">
-            <h2>฿{(villa.pricePerNight || villa.pricePerMight || 0).toLocaleString('th-TH')} <span>/ คืน</span></h2>
+            <h2>฿{(villa.pricePerNight || 0).toLocaleString('th-TH')} <span>/ คืน</span></h2>
           </div>
 
           <div className="villa-features">
             <div className="feature">
-              <span>🛏️ {villa.bedrooms} ห้องนอน</span>
+              <span>🛏️ {villa.bedrooms || 0} ห้องนอน</span>
             </div>
             <div className="feature">
-              <span>🚿 {villa.bathrooms} ห้องน้ำ</span>
+              <span>🚿 {villa.bathrooms || 0} ห้องน้ำ</span>
             </div>
             <div className="feature">
-              <span>👥 {villa.capacity} ผู้เข้าพัก</span>
+              <span>👥 {villa.capacity || 0} ผู้เข้าพัก</span>
             </div>
           </div>
 

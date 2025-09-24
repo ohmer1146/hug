@@ -1,60 +1,66 @@
 // src/components/FeaturedVillas.js
 import React from 'react';
-import { Link } from 'react-router-dom'; // เพิ่ม import นี้
+import { Link } from 'react-router-dom';
 import VillaCard from './VillaCard';
 
 const FeaturedVillas = () => {
-  // ข้อมูลตัวอย่าง - ควรดึงข้อมูลจริงจาก API
+  // ข้อมูลตัวอย่าง - แก้ไขให้ถูกต้อง
   const featuredVillas = [
     {
-      id: 1,
-      name: "Home Hug Poolvilla",
-      location: "Pattaya, Thailand",
+      _id: "1",
+      name: "Home Hug Pool Villa 1",
+      location: "พัทยา, ประเทศไทย",
       guests: 6,
       bedrooms: 3,
       bathrooms: 2,
-      description: "Luxury villa with private pool, stunning river views, and premium amenities for the perfect getaway.",
-      price: 4900,
-      image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523453567.jpg?k=b97f0dc98d43db8bc076acc5a06a7b6f37ce2b07996188564de4d96a16279bd5&o=&hp=1"
+      capacity: 6, // เพิ่ม capacity
+      description: "พูลวิลล่าสุดหรูในพัทยา พร้อมสระว่ายน้ำส่วนตัว",
+      pricePerNight: 12500,
+      images: ["https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1"],
+      amenities: ["สระว่ายน้ำส่วนตัว", "ที่จอดรถ", "WiFi"]
     },
     {
-      id: 2,
-      name: "Home Hug Poolvilla",
-      location: "Pattaya, Thailand",
+      _id: "2",
+      name: "Home Hug Pool Villa 2",
+      location: "พัทยา, ประเทศไทย", 
       guests: 8,
       bedrooms: 4,
       bathrooms: 3,
-      description: "Beachfront villa with infinity pool, direct beach access, and panoramic ocean views.",
-      price: 4900,
-      image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523453567.jpg?k=b97f0dc98d43db8bc076acc5a06a7b6f37ce2b07996188564de4d96a16279bd5&o=&hp=1"
+      capacity: 8,
+      description: "วิลล่าดีไซน์โมเดิร์นพร้อมอินฟินิตี้พูล",
+      pricePerNight: 18900,
+      images: ["https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1"],
+      amenities: ["อินฟินิตี้พูล", "สวนส่วนตัว", "ครัวพร้อม"]
     },
     {
-      id: 3,
-      name: "Home Hug Poolvilla",
-      location: "Pattaya, Thailand",
+      _id: "3", 
+      name: "Home Hug Pool Villa 3",
+      location: "พัทยา, ประเทศไทย",
       guests: 4,
       bedrooms: 2,
       bathrooms: 2,
-      description: "Modern villa with stunning sunset views, private pool, and luxury furnishings.",
-      price: 7900,
-      image: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/523453567.jpg?k=b97f0dc98d43db8bc076acc5a06a7b6f37ce2b07996188564de4d96a16279bd5&o=&hp=1"
+      capacity: 4,
+      description: "วิลล่าขนาดกะทัดรัดเหมาะสำหรับครอบครัว",
+      pricePerNight: 9800,
+      images: ["https://cf.bstatic.com/xdata/images/hotel/max1024x768/523443492.jpg?k=757744174334a476ef43be694c18c6910c0c05c7f5859db979130cce7f3060b2&o=&hp=1"],
+      amenities: ["สระว่ายน้ำ", "ที่จอดรถ", "WiFi"]
     }
   ];
 
   return (
-    <section className="section">
+    <section className="section featured-villas">
       <div className="container">
-        <h2 className="section-title">Featured Villas</h2>
-        <p className="section-subtitle">Discover our handpicked selection of luxury pool villas for an unforgettable stay</p>
+        <h2 className="section-title">พูลวิลล่าแนะนำ</h2>
+        <p className="section-subtitle">ค้นพบพูลวิลล่าหลักสวยในพัทยาสำหรับการพักผ่อนที่สมบูรณ์แบบ</p>
         
         <div className="villas-grid">
           {featuredVillas.map(villa => (
-            <VillaCard key={villa.id} villa={villa} />
+            <VillaCard key={villa._id} villa={villa} />
           ))}
         </div>
         
         <div className="view-all">
-          <Link to="/villas" className="btn btn-primary">View All Villas</Link>
+          <Link to="/villas" className="btn btn-primary">ดูวิลล่าทั้งหมด</Link>
         </div>
       </div>
     </section>
