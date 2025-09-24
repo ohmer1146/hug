@@ -1,23 +1,68 @@
+// backend/routes/villas.js
 const express = require('express');
 const router = express.Router();
 const Villa = require('../models/Villa');
 const Booking = require('../models/Booking');
+const mongoose = require('mongoose');
+const validateObjectId = require('../middleware/validateObjectId');
 
-// ต้องวาง route พิเศษก่อน route ทั่วไป
-
-// ตรวจสอบว่ามีข้อมูลวิลล่าหรือไม่ (ต้องอยู่ก่อน :id)
-router.get('/check/data', async (req, res) => {
+// ใช้ middleware ตรวจสอบ ObjectId สำหรับ routes ที่ใช้ id
+router.get('/:id', validateObjectId, async (req, res) => {
   try {
-    const count = await Villa.countDocuments();
-    const villas = await Villa.find().limit(3);
+    const villa = await Villa.findById(req.params.id);
+    if (!villa) {
+      return res.status(404).json({
+        success: false,
+        message: 'Villa not found'
+      });
+    }
     
     res.json({
-      totalVillas: count,
-      sampleVillas: villas
+      success: true,
+      data: villa
     });
   } catch (error) {
-    console.error('Error checking villa data:', error);
-    res.status(500).json({ message: 'Error checking villa data' });
+    console.error('Error fetching villa:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching villa data'
+    });
+  }
+});
+
+// Get all villas
+router.get('/', async (req, res) => {
+  try {
+    const villas = await Villa.find({ available: true });
+    res.json({
+      success: true,
+      count: villas.length,
+      data: villas
+    });
+  } catch (error) {
+    console.error('Error fetching villas:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching villas data'
+    });
+  }
+});
+
+// Get featured villas
+router.get('/featured/featured', async (req, res) => {
+  try {
+    const villas = await Villa.find({ featured: true, available: true });
+    res.json({
+      success: true,
+      count: villas.length,
+      data: villas
+    });
+  } catch (error) {
+    console.error('Error fetching featured villas:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching featured villas'
+    });
   }
 });
 

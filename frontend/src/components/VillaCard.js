@@ -1,12 +1,20 @@
-// VillaCard.js
+// VillaCard.js - เพิ่มการตรวจสอบ
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './VillaCard.css';
 
 const VillaCard = ({ villa }) => {
-  if (!villa) return null;
-
-  const mainImage = villa.images && villa.images.length > 0 ? villa.images[0] : null;
+  // ตรวจสอบว่า villa และ villa._id มีค่าถูกต้อง
+  if (!villa || !villa._id) {
+    return (
+      <div className="villa-card error">
+        <div className="error-message">
+          <p>ข้อมูลวิลล่าไม่สมบูรณ์</p>
+          <Link to="/villas" className="btn">ดูวิลล่าอื่นๆ</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="villa-card">

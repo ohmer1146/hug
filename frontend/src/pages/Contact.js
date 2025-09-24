@@ -117,7 +117,7 @@ const Contact = () => {
         {/* Map */}
         <div className="contact-map">
           <iframe 
-            src="https://maps.app.goo.gl/j5eNPc4YmnE91nbd7" 
+            src="https://www.google.com/maps/place/HomeHug+PoolVilla+Pattaya/@12.8813946,100.9079113,16.25z/data=!4m14!1m7!3m6!1s0x3102950059d21839:0xd2dd6485e54246cf!2sHomeHug+PoolVilla+Pattaya!8m2!3d12.8791403!4d100.9068885!16s%2Fg%2F11lw0ljt9c!3m5!1s0x3102950059d21839:0xd2dd6485e54246cf!8m2!3d12.8791403!4d100.9068885!16s%2Fg%2F11lw0ljt9c?entry=ttu&g_ep=EgoyMDI1MDkyMS4wIKXMDSoASAFQAw%3D%3D" 
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 
